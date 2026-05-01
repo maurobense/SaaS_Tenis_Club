@@ -1,0 +1,17 @@
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\HashTool.exe
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\HashTool.deps.json
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\HashTool.runtimeconfig.json
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\HashTool.dll
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\HashTool.pdb
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.csproj.AssemblyReference.cache
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.AssemblyInfoInputs.cache
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.AssemblyInfo.cs
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.csproj.CoreCompileInputs.cache
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.csproj.Up2Date
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.dll
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\refint\HashTool.dll
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.pdb
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\HashTool.genruntimeconfig.cache
+C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\tools\HashTool\obj\Debug\net8.0\ref\HashTool.dll

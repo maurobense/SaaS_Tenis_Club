@@ -1,0 +1,7 @@
+Usando la configuración de inicio de TennisClubSaaS.Api\Properties\launchSettings.json...
+[02:06:15 INF] No migrations were applied. The database is already up to date.
+[02:06:17 INF] Now listening on: https://localhost:64651
+[02:06:17 INF] Now listening on: http://localhost:64652
+[02:06:17 INF] Application started. Press Ctrl+C to shut down.
+[02:06:17 INF] Hosting environment: Development
+[02:06:17 INF] Content root path: C:\Users\mauro\Documents\Codex\2026-05-01\quiero-que-construyas-una-aplicaci-n\SaaS_Tenis_Club\backend\TennisClubSaaS.Api\TennisClubSaaS.Api

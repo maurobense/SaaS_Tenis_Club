@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "iHw5/eg2km4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\tools\\HashTool\\HashTool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mauro\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

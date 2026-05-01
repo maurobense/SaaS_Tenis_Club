@@ -1,0 +1,122 @@
+<!doctype html>
+  <html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @page { size: 9in 16in; margin: 0; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #0f172a; background: #eef2f7; }
+      .slide { width: 9in; height: 16in; page-break-after: always; position: relative; overflow: hidden; background: #f8fafc; padding: .55in; }
+      .slide.dark { background: #08111f; color: #f8fafc; }
+      .kicker { color: #2563eb; font-weight: 900; letter-spacing: .12em; font-size: 18px; text-transform: uppercase; }
+      h1 { margin: .1in 0 .16in; font-size: 54px; line-height: .96; letter-spacing: -0.02em; max-width: 7.7in; }
+      h2 { margin: .08in 0 .14in; font-size: 38px; line-height: 1.04; letter-spacing: -0.018em; max-width: 7.5in; }
+      p { font-size: 22px; line-height: 1.45; color: #475569; margin: 0; }
+      .dark p { color: #cbd5e1; }
+      .brand { position: absolute; left: .72in; top: .55in; display: flex; gap: 12px; align-items: center; font-weight: 900; }
+      .mark { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, #2563eb, #10b981); color: white; display: grid; place-items: center; font-size: 24px; }
+      .hero { display: grid; grid-template-columns: 1fr; gap: .5in; align-items: center; height: 100%; padding-top: .3in; }
+      .proof { border: 1px solid #dbe4f0; border-radius: 24px; background: white; box-shadow: 0 22px 60px rgba(15, 23, 42, .12); padding: .16in; }
+      .proof img { width: 100%; height: auto; border-radius: 16px; display: block; }
+      .text-image { display: grid; grid-template-columns: 1fr; gap: .42in; align-items: center; height: 100%; }
+      .bullets { margin-top: .34in; display: grid; gap: .12in; }
+      .bullet { display: flex; gap: 12px; align-items: flex-start; font-size: 20px; line-height: 1.3; color: #0f172a; }
+      .bullet:before { content: ""; width: 9px; height: 9px; border-radius: 99px; background: #10b981; margin-top: 8px; flex: 0 0 auto; }
+      .metric-rail { position: absolute; left: .72in; right: .72in; bottom: .6in; display: grid; grid-template-columns: repeat(4, 1fr); gap: .16in; }
+      .metric { border-top: 1px solid rgba(255,255,255,.25); padding-top: .16in; }
+      .metric strong { display:block; font-size: 32px; color: white; }
+      .metric span { color: #cbd5e1; font-size: 15px; }
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: .22in; margin-top: .36in; }
+      .card { border: 1px solid #dbe4f0; background: white; border-radius: 20px; padding: .28in; box-shadow: 0 16px 38px rgba(15,23,42,.08); min-height: 1.55in; }
+      .card strong { display: block; font-size: 24px; margin-bottom: .08in; }
+      .card span { color: #64748b; font-size: 17px; line-height: 1.35; }
+      .diagram { margin-top: .35in; display: grid; grid-template-columns: repeat(4, 1fr); gap: .18in; align-items: stretch; }
+      .node { border: 1px solid #dbe4f0; background: white; border-radius: 18px; padding: .22in; }
+      .node b { display:block; color:#2563eb; margin-bottom: .08in; }
+      .phone-wrap { height: 11.4in; display: grid; place-items: center; margin-top: .28in; }
+      .phone { width: 4.35in; border-radius: .45in; padding: .14in; background: #0b1220; box-shadow: 0 30px 80px rgba(0,0,0,.28); }
+      .phone img { width: 100%; border-radius: .32in; display: block; }
+      .mobile-title h2 { font-size: 40px; }
+      .flow { margin-top: .45in; display:grid; gap:.18in; }
+      .step { display:grid; grid-template-columns:.55in 1fr; gap:.16in; align-items:start; background:white; border:1px solid #dbe4f0; border-radius:22px; padding:.24in; }
+      .step i { width:.5in; height:.5in; border-radius:50%; background:#2563eb; color:white; display:grid; place-items:center; font-style:normal; font-weight:900; }
+      .footer { position:absolute; left:.72in; bottom:.3in; color:#64748b; font-size:14px; }
+    </style>
+  </head>
+  <body>
+    <section class="slide dark">
+    <div class="brand"><div class="mark">T</div><div>SaaS Tenis Club</div></div>
+    <div style="position:absolute; left:.55in; right:.55in; top:2.3in;">
+      <div class="kicker">Presentacion mobile</div>
+      <h1>La experiencia mobile que el socio realmente usa</h1>
+      <p>Reservar, anotarse a clases, revisar pagos y gestionar su perfil desde el celular.</p>
+    </div>
+    <div class="metric-rail" style="grid-template-columns:1fr 1fr; bottom:.7in;">
+      <div class="metric"><strong>Reservas</strong><span>En segundos</span></div>
+      <div class="metric"><strong>Pagos</strong><span>Transparentes</span></div>
+      <div class="metric"><strong>Clases</strong><span>Con cupos</span></div>
+      <div class="metric"><strong>Perfil</strong><span>Idioma y tema</span></div>
+    </div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">SOCIO</div>
+      <h2>Mi panel resume lo que importa: membresia, proxima reserva, proxima clase y pagos pendientes.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-panel.png" alt="Mi panel resume lo que importa: membresia, proxima reserva, proxima clase y pagos pendientes." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">RESERVAR</div>
+      <h2>La grilla mobile prioriza accion rapida: fecha, cancha, turnos disponibles y estado visual.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-reservas.png" alt="La grilla mobile prioriza accion rapida: fecha, cancha, turnos disponibles y estado visual." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">INVITADOS</div>
+      <h2>Al reservar se elige singles o dobles y se cargan socios o invitados no socios. El costo se calcula en vivo.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-reserva-modal.png" alt="Al reservar se elige singles o dobles y se cargan socios o invitados no socios. El costo se calcula en vivo." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">CLASES</div>
+      <h2>El socio ve cupos, nivel, profesor y estado de inscripcion. Si ya esta anotado, no se le ofrece anotarse de nuevo.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-clases.png" alt="El socio ve cupos, nivel, profesor y estado de inscripcion. Si ya esta anotado, no se le ofrece anotarse de nuevo." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">PAGOS</div>
+      <h2>La pantalla de pagos muestra membresia y conceptos separados para evitar confusiones.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-pagos.png" alt="La pantalla de pagos muestra membresia y conceptos separados para evitar confusiones." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="mobile-title">
+      <div class="kicker">PREFERENCIAS</div>
+      <h2>Perfil permite idioma, tema claro/oscuro y cambio de contrasena.</h2>
+    </div>
+    <div class="phone-wrap"><div class="phone"><img src="capturas/mobile-perfil.png" alt="Perfil permite idioma, tema claro/oscuro y cambio de contrasena." /></div></div>
+  </section>
+    <section class="slide">
+    <div class="kicker">FLUJO MOBILE</div>
+    <h2>Un socio puede resolver su dia a dia sin llamar al club.</h2>
+    <div class="flow">
+      <div class="step"><i>1</i><div><b>Abre Mi panel</b><p>Ve membresia, proxima clase, proxima reserva y pagos.</p></div></div>
+      <div class="step"><i>2</i><div><b>Reserva cancha</b><p>Elige singles o dobles, agrega socios o invitados no socios y confirma.</p></div></div>
+      <div class="step"><i>3</i><div><b>Se anota a clases</b><p>Si hay cupo entra activo; si esta lleno puede ir a lista de espera.</p></div></div>
+      <div class="step"><i>4</i><div><b>Consulta pagos</b><p>Distingue deuda de membresia y cargos por invitados.</p></div></div>
+    </div>
+  </section>
+    <section class="slide dark">
+    <div class="brand"><div class="mark">T</div><div>SaaS Tenis Club</div></div>
+    <div style="position:absolute; left:.55in; right:.55in; top:2.1in;">
+      <div class="kicker">Mobile first</div>
+      <h1>La venta se vuelve mas simple cuando el socio entiende la app en la primera mirada.</h1>
+      <p>Reservas, clases, pagos y perfil quedan en un recorrido claro, moderno y usable.</p>
+    </div>
+  </section>
+  </body>
+  </html>

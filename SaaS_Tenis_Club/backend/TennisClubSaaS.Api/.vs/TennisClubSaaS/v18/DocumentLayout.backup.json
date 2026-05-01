@@ -1,0 +1,194 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|solutionrelative:tennisclubsaas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E002}|TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.application\\interfaces\\contracts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E002}|TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj|solutionrelative:tennisclubsaas.application\\interfaces\\contracts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E002}|TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.application\\dtos\\commondtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E002}|TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj|solutionrelative:tennisclubsaas.application\\dtos\\commondtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.api\\controllers\\tenantscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|solutionrelative:tennisclubsaas.api\\controllers\\tenantscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|solutionrelative:tennisclubsaas.api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E003}|TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.domain\\tennisclubsaas.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E003}|TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj|solutionrelative:tennisclubsaas.domain\\tennisclubsaas.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E001}|TennisClubSaaS.Api\\TennisClubSaaS.Api.csproj|solutionrelative:tennisclubsaas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E003}|TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.domain\\entities\\entities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E003}|TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj|solutionrelative:tennisclubsaas.domain\\entities\\entities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E004}|TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.infrastructure\\seed\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E004}|TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj|solutionrelative:tennisclubsaas.infrastructure\\seed\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E004}|TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj|c:\\users\\mauro\\documents\\codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\saas_tenis_club\\backend\\tennisclubsaas.api\\tennisclubsaas.infrastructure\\data\\tennisclubdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A4F64B1-846B-4B33-A1E8-AE2C3B11E004}|TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj|solutionrelative:tennisclubsaas.infrastructure\\data\\tennisclubdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Contracts.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\Interfaces\\Contracts.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Application\\Interfaces\\Contracts.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\Interfaces\\Contracts.cs",
+              "RelativeToolTip": "TennisClubSaaS.Application\\Interfaces\\Contracts.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T08:12:01.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CommonDtos.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\DTOs\\CommonDtos.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Application\\DTOs\\CommonDtos.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\DTOs\\CommonDtos.cs",
+              "RelativeToolTip": "TennisClubSaaS.Application\\DTOs\\CommonDtos.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAA8wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T07:29:00.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TenantsController.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Controllers\\TenantsController.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Api\\Controllers\\TenantsController.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Controllers\\TenantsController.cs",
+              "RelativeToolTip": "TennisClubSaaS.Api\\Controllers\\TenantsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T07:28:54.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Program.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Program.cs",
+              "RelativeToolTip": "TennisClubSaaS.Api\\Program.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAmwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T05:06:25.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\appsettings.json",
+              "RelativeToolTip": "TennisClubSaaS.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-01T04:52:37.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClassesController.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Controllers\\ClassesController.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Api\\Controllers\\ClassesController.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Api\\Controllers\\ClassesController.cs",
+              "RelativeToolTip": "TennisClubSaaS.Api\\Controllers\\ClassesController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAA/wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T04:51:10.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Entities.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\Entities\\Entities.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Domain\\Entities\\Entities.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\Entities\\Entities.cs",
+              "RelativeToolTip": "TennisClubSaaS.Domain\\Entities\\Entities.cs",
+              "ViewState": "AgIAAOsAAAAAAAAAAAA/wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T04:50:36.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TennisClubSaaS.Domain",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+              "RelativeToolTip": "TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-01T04:50:24.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DbSeeder.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\Seed\\DbSeeder.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Infrastructure\\Seed\\DbSeeder.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\Seed\\DbSeeder.cs",
+              "RelativeToolTip": "TennisClubSaaS.Infrastructure\\Seed\\DbSeeder.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T04:50:15.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TennisClubDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\Data\\TennisClubDbContext.cs",
+              "RelativeDocumentMoniker": "TennisClubSaaS.Infrastructure\\Data\\TennisClubDbContext.cs",
+              "ToolTip": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\Data\\TennisClubDbContext.cs",
+              "RelativeToolTip": "TennisClubSaaS.Infrastructure\\Data\\TennisClubDbContext.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T04:49:51.501Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

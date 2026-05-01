@@ -1,0 +1,204 @@
+<!doctype html>
+  <html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @page { size: 16in 9in; margin: 0; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #0f172a; background: #eef2f7; }
+      .slide { width: 16in; height: 9in; page-break-after: always; position: relative; overflow: hidden; background: #f8fafc; padding: .58in .72in; }
+      .slide.dark { background: #08111f; color: #f8fafc; }
+      .kicker { color: #2563eb; font-weight: 900; letter-spacing: .12em; font-size: 15px; text-transform: uppercase; }
+      h1 { margin: .1in 0 .16in; font-size: 58px; line-height: .96; letter-spacing: -0.02em; max-width: 9.8in; }
+      h2 { margin: .08in 0 .14in; font-size: 42px; line-height: 1.04; letter-spacing: -0.018em; max-width: 7.1in; }
+      p { font-size: 19px; line-height: 1.45; color: #475569; margin: 0; }
+      .dark p { color: #cbd5e1; }
+      .brand { position: absolute; left: .72in; top: .55in; display: flex; gap: 12px; align-items: center; font-weight: 900; }
+      .mark { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, #2563eb, #10b981); color: white; display: grid; place-items: center; font-size: 24px; }
+      .hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: .5in; align-items: center; height: 100%; padding-top: .2in; }
+      .proof { border: 1px solid #dbe4f0; border-radius: 24px; background: white; box-shadow: 0 22px 60px rgba(15, 23, 42, .12); padding: .16in; }
+      .proof img { width: 100%; height: auto; border-radius: 16px; display: block; }
+      .text-image { display: grid; grid-template-columns: 6.2in 1fr; gap: .42in; align-items: center; height: 100%; }
+      .bullets { margin-top: .34in; display: grid; gap: .12in; }
+      .bullet { display: flex; gap: 12px; align-items: flex-start; font-size: 18px; line-height: 1.3; color: #0f172a; }
+      .bullet:before { content: ""; width: 9px; height: 9px; border-radius: 99px; background: #10b981; margin-top: 8px; flex: 0 0 auto; }
+      .metric-rail { position: absolute; left: .72in; right: .72in; bottom: .6in; display: grid; grid-template-columns: repeat(4, 1fr); gap: .16in; }
+      .metric { border-top: 1px solid rgba(255,255,255,.25); padding-top: .16in; }
+      .metric strong { display:block; font-size: 32px; color: white; }
+      .metric span { color: #cbd5e1; font-size: 15px; }
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: .22in; margin-top: .36in; }
+      .card { border: 1px solid #dbe4f0; background: white; border-radius: 20px; padding: .28in; box-shadow: 0 16px 38px rgba(15,23,42,.08); min-height: 1.55in; }
+      .card strong { display: block; font-size: 24px; margin-bottom: .08in; }
+      .card span { color: #64748b; font-size: 17px; line-height: 1.35; }
+      .diagram { margin-top: .35in; display: grid; grid-template-columns: repeat(4, 1fr); gap: .18in; align-items: stretch; }
+      .node { border: 1px solid #dbe4f0; background: white; border-radius: 18px; padding: .22in; }
+      .node b { display:block; color:#2563eb; margin-bottom: .08in; }
+      .phone-wrap { height: 11.4in; display: grid; place-items: center; margin-top: .28in; }
+      .phone { width: 4.35in; border-radius: .45in; padding: .14in; background: #0b1220; box-shadow: 0 30px 80px rgba(0,0,0,.28); }
+      .phone img { width: 100%; border-radius: .32in; display: block; }
+      .mobile-title h2 { font-size: 40px; }
+      .flow { margin-top: .45in; display:grid; gap:.18in; }
+      .step { display:grid; grid-template-columns:.55in 1fr; gap:.16in; align-items:start; background:white; border:1px solid #dbe4f0; border-radius:22px; padding:.24in; }
+      .step i { width:.5in; height:.5in; border-radius:50%; background:#2563eb; color:white; display:grid; place-items:center; font-style:normal; font-weight:900; }
+      .footer { position:absolute; left:.72in; bottom:.3in; color:#64748b; font-size:14px; }
+    </style>
+  </head>
+  <body>
+    <section class="slide dark">
+    <div class="brand"><div class="mark">T</div><div>SaaS Tenis Club</div></div>
+    <div class="hero">
+      <div>
+        <div class="kicker">Presentacion comercial desktop</div>
+        <h1>Una plataforma lista para vender a clubes de tenis</h1>
+        <p>Reservas, clases, socios, pagos, profesores y configuracion multitenant en una sola experiencia SaaS.</p>
+      </div>
+    </div>
+    <div class="metric-rail">
+      <div class="metric"><strong>4 roles</strong><span>SuperAdmin, admin, profesor y socio</span></div>
+      <div class="metric"><strong>Multi club</strong><span>Datos aislados por tenant</span></div>
+      <div class="metric"><strong>Mobile first</strong><span>Reservas desde el celular</span></div>
+      <div class="metric"><strong>Pagos claros</strong><span>Membresia e invitados separados</span></div>
+    </div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">ADMINISTRACION</div>
+        <h2>El administrador ve el pulso completo del club en segundos.</h2>
+        <p>Metricas operativas, alertas de pagos, reservas de hoy, ocupacion de canchas y accesos rapidos para operar el dia a dia.</p>
+        <div class="bullets"><div class="bullet">Socios activos e inactivos</div><div class="bullet">Pagos vencidos y pendientes</div><div class="bullet">Reservas de hoy y de la semana</div><div class="bullet">Ocupacion por cancha y alertas comerciales</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-admin-dashboard.png" alt="El administrador ve el pulso completo del club en segundos." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">RESERVAS</div>
+        <h2>Agenda visual para reservar, bloquear y controlar disponibilidad.</h2>
+        <p>Cada reserva respeta reglas configurables: limite semanal, ventana de apertura, disponibilidad de cancha, membresia activa y pagos.</p>
+        <div class="bullets"><div class="bullet">Singles o dobles con jugadores adicionales</div><div class="bullet">Socios e invitados no socios</div><div class="bullet">Bloqueos por mantenimiento, torneo o uso interno</div><div class="bullet">Costo por invitado configurable</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-reservas.png" alt="Agenda visual para reservar, bloquear y controlar disponibilidad." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">CLASES</div>
+        <h2>Clases con cupos, lista de espera y control por profesor.</h2>
+        <p>El club puede crear grupos por nivel, asignar profesor y cancha, controlar inscripciones y permitir que el profesor reserve cupos para alumnos.</p>
+        <div class="bullets"><div class="bullet">Cupo maximo por clase</div><div class="bullet">Lista de espera inteligente</div><div class="bullet">Profesor ve sus alumnos</div><div class="bullet">Socio puede anotarse o cancelar</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-clases.png" alt="Clases con cupos, lista de espera y control por profesor." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">SOCIOS</div>
+        <h2>Perfil completo del socio para administrar relacion y riesgo.</h2>
+        <p>El admin puede consultar membresia, pagos, reservas, clases, no-shows, notas y estado de actividad sin mezclar datos de otros tenants.</p>
+        <div class="bullets"><div class="bullet">Historial de pagos y reservas</div><div class="bullet">Estado de membresia</div><div class="bullet">Activar o desactivar socios</div><div class="bullet">Notas administrativas</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-socios.png" alt="Perfil completo del socio para administrar relacion y riesgo." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">PAGOS</div>
+        <h2>Los ingresos quedan separados por motivo, no mezclados en una caja generica.</h2>
+        <p>El sistema distingue cuota social, invitados no socios, reserva de cancha y otros conceptos. Esto hace mas claro el reporte y evita errores contables.</p>
+        <div class="bullets"><div class="bullet">Membresia mensual</div><div class="bullet">Pago de invitados de cancha</div><div class="bullet">Reserva de cancha</div><div class="bullet">Otros conceptos</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-pagos.png" alt="Los ingresos quedan separados por motivo, no mezclados en una caja generica." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">CANCHAS</div>
+        <h2>Gestion de canchas con estilo premium y acciones reales.</h2>
+        <p>Alta, edicion, superficie, luces, horarios, duracion de turnos y desactivacion con confirmacion.</p>
+        <div class="bullets"><div class="bullet">Polvo de ladrillo, dura, cesped o sintetica</div><div class="bullet">Techada o exterior</div><div class="bullet">Turnos configurables</div><div class="bullet">Alta de nuevas canchas</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-canchas.png" alt="Gestion de canchas con estilo premium y acciones reales." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">PROFESORES</div>
+        <h2>El profesor tiene su propio panel y no ve lo que no corresponde.</h2>
+        <p>Cada rol tiene navegacion y permisos propios. El profesor gestiona sus clases, asistencia, alumnos y agenda sin acceso administrativo completo.</p>
+        <div class="bullets"><div class="bullet">Usuario profesor con credenciales</div><div class="bullet">Cambio de contrasena desde Perfil</div><div class="bullet">Reserva cupos para socios</div><div class="bullet">Marca asistencia</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-profesor.png" alt="El profesor tiene su propio panel y no ve lo que no corresponde." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="text-image">
+      <div>
+        <div class="kicker">CONFIGURACION</div>
+        <h2>Cada club controla sus propias reglas de negocio.</h2>
+        <p>Nada importante queda hardcodeado: dias de pago, limite de reservas, limite de clases, invitados, colores, idioma y zona horaria se ajustan por tenant.</p>
+        <div class="bullets"><div class="bullet">Costo por invitado no socio</div><div class="bullet">Reservas por semana</div><div class="bullet">Clases por semana</div><div class="bullet">Idioma, colores y reglas</div></div>
+      </div>
+      <div class="proof"><img src="capturas/desktop-configuracion.png" alt="Cada club controla sus propias reglas de negocio." /></div>
+    </div>
+    <div class="footer">SaaS Tenis Club - Plataforma comercial para clubes de tenis</div>
+  </section>
+    <section class="slide">
+    <div class="kicker">ARQUITECTURA</div>
+    <h2>Base seria para vender a muchos clubes sin mezclar datos.</h2>
+    <p>Backend .NET por capas, Entity Framework Core Code First, JWT, refresh tokens, roles y aislamiento por tenant usando el header X-Tenant-Slug.</p>
+    <div class="diagram">
+      <div class="node"><b>Frontend estatico</b><span>Vanilla JS, hash routing, API client centralizado, Netlify-ready.</span></div>
+      <div class="node"><b>API .NET</b><span>Controllers, middlewares, Swagger, Serilog, CORS y manejo global de errores.</span></div>
+      <div class="node"><b>Application</b><span>Servicios, DTOs, reglas de reservas, cupos, pagos y membresias.</span></div>
+      <div class="node"><b>Infrastructure</b><span>SQL Server, EF Core, migrations, seed, repositorios y Unit of Work.</span></div>
+    </div>
+    <div class="cards">
+      <div class="card"><strong>Tenant isolation</strong><span>Cada query relevante se filtra por ClubTenantId.</span></div>
+      <div class="card"><strong>Reglas configurables</strong><span>Limites semanales, costo de invitados, horarios y pagos por club.</span></div>
+      <div class="card"><strong>Preparado para deploy</strong><span>Backend Somee, frontend Netlify y SQL Server.</span></div>
+    </div>
+  </section>
+    <section class="slide">
+    <div class="kicker">EJEMPLOS DE USO</div>
+    <h2>El sistema cubre la operacion real, no solo la demo visual.</h2>
+    <div class="cards">
+      <div class="card"><strong>Socio reserva dobles</strong><span>Elige cancha y horario, carga tres jugadores, marca quienes son invitados y ve el total a cobrar.</span></div>
+      <div class="card"><strong>Admin registra pago</strong><span>Selecciona motivo: membresia, invitados de cancha, reserva u otro. El reporte queda separado.</span></div>
+      <div class="card"><strong>Profesor reserva cupo</strong><span>Desde sus clases, busca socios elegibles y reserva cupos sin acceder a configuracion del club.</span></div>
+      <div class="card"><strong>Club cambia reglas</strong><span>Actualiza limites semanales, dias de pago, lista de espera, costo de invitados e idioma.</span></div>
+      <div class="card"><strong>Pago vencido bloquea reserva</strong><span>Segun configuracion, el socio con deuda queda bloqueado o advertido al reservar.</span></div>
+      <div class="card"><strong>SuperAdmin escala SaaS</strong><span>Puede administrar clubes, activar tenants y mirar metricas generales de uso.</span></div>
+    </div>
+  </section>
+    <section class="slide dark">
+    <div class="brand"><div class="mark">T</div><div>SaaS Tenis Club</div></div>
+    <div class="hero">
+      <div>
+        <div class="kicker">CIERRE COMERCIAL</div>
+        <h1>SaaS Tenis Club convierte la operacion diaria del club en un producto digital vendible.</h1>
+        <p>Demo lista para mostrar: reservas, pagos, socios, clases, profesores y configuracion multitenant.</p>
+      </div>
+    </div>
+    <div class="metric-rail">
+      <div class="metric"><strong>Menos planillas</strong><span>Operacion centralizada</span></div>
+      <div class="metric"><strong>Mas control</strong><span>Reglas por club</span></div>
+      <div class="metric"><strong>Mas ingresos</strong><span>Invitados y membresias trazables</span></div>
+      <div class="metric"><strong>Mejor UX</strong><span>Socio mobile first</span></div>
+    </div>
+  </section>
+  </body>
+  </html>
