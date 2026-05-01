@@ -50,7 +50,10 @@ export function wireGlobalSearch() {
 
   const close = () => {
     panel.hidden = true;
+    panel.innerHTML = "";
     input.setAttribute("aria-expanded", "false");
+    root.classList.remove("search-open");
+    root.closest(".topbar")?.classList.remove("search-open");
   };
 
   const show = html => {
@@ -58,17 +61,15 @@ export function wireGlobalSearch() {
     translateElement(panel);
     panel.hidden = false;
     input.setAttribute("aria-expanded", "true");
-  };
-
-  const renderQuickActions = () => {
-    currentResults = quickActionsForRole(user?.role);
-    show(`<div class="search-section-label">Accesos rapidos</div>${renderResults(currentResults)}`);
+    root.classList.add("search-open");
+    root.closest(".topbar")?.classList.add("search-open");
   };
 
   const runSearch = async () => {
     const query = input.value.trim();
     if (!query) {
-      renderQuickActions();
+      currentResults = [];
+      close();
       return;
     }
     if (query.length < 2) {
@@ -84,7 +85,6 @@ export function wireGlobalSearch() {
 
   input.addEventListener("focus", () => {
     if (input.value.trim()) runSearch();
-    else renderQuickActions();
   });
 
   input.addEventListener("input", () => {
@@ -110,6 +110,9 @@ export function wireGlobalSearch() {
     if (!root.contains(event.target)) close();
   });
 
+  document.addEventListener("modal:open", close);
+  window.addEventListener("hashchange", close);
+
   document.querySelector("[data-theme-toggle]")?.addEventListener("click", event => {
     const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
@@ -120,7 +123,10 @@ export function wireGlobalSearch() {
 function navigateTo(route, input, panel) {
   input.value = "";
   panel.hidden = true;
+  panel.innerHTML = "";
   input.setAttribute("aria-expanded", "false");
+  input.closest("[data-global-search]")?.classList.remove("search-open");
+  input.closest(".topbar")?.classList.remove("search-open");
   if (route) location.hash = route;
 }
 
@@ -280,7 +286,7 @@ function mapReservation(reservation) {
 }
 
 function mapPayment(payment) {
-  return item(`$ ${Number(payment.amount || 0).toLocaleString("es-UY")}`, `${payment.memberName || "Socio"} - ${dateOnly(payment.paymentDate)} - ${payment.status || ""}`, "Pago", "#/payments", `${payment.paymentMethod || ""} cuota membresia`);
+  return item(`$ ${Number(payment.amount || 0).toLocaleString("es-UY")}`, `${payment.memberName || "Socio"} - ${dateOnly(payment.paymentDate)} - ${paymentStatusLabel(payment.status)}`, "Pago", "#/payments", `${payment.paymentMethod || ""} cuota membresia`);
 }
 
 function item(title, detail, type, route, keywords = "") {
@@ -323,4 +329,19 @@ function dateTime(value) {
 
 function dayName(value) {
   return { 0: "Domingo", 1: "Lunes", 2: "Martes", 3: "Miercoles", 4: "Jueves", 5: "Viernes", 6: "Sabado", Monday: "Lunes", Tuesday: "Martes", Wednesday: "Miercoles", Thursday: "Jueves", Friday: "Viernes", Saturday: "Sabado", Sunday: "Domingo" }[value] || value || "Horario";
+}
+
+function paymentStatusLabel(value) {
+  return {
+    1: "Pendiente",
+    2: "Pago",
+    3: "Fallido",
+    4: "Reembolsado",
+    5: "Cancelado",
+    Pending: "Pendiente",
+    Paid: "Pago",
+    Failed: "Fallido",
+    Refunded: "Reembolsado",
+    Cancelled: "Cancelado"
+  }[value] || value || "Pendiente";
 }

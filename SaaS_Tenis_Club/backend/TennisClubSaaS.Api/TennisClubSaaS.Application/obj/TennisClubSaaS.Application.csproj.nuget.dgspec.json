@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {}
+    "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {
+    "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
+        "projectUniqueName": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
         "projectName": "TennisClubSaaS.Application",
-        "projectPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
+        "projectPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
         "packagesPath": "C:\\Users\\mauro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\obj\\",
+        "outputPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj": {
-                "projectPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj"
+              "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj": {
+                "projectPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj"
               }
             }
           }
@@ -81,14 +81,14 @@
         }
       }
     },
-    "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj": {
+    "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+        "projectUniqueName": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
         "projectName": "TennisClubSaaS.Domain",
-        "projectPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+        "projectPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
         "packagesPath": "C:\\Users\\mauro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\obj\\",
+        "outputPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

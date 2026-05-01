@@ -1,6 +1,6 @@
 import { auth, normalizeRole } from "../auth.js?v=2026050123";
 import { apiClient } from "../apiClient.js?v=2026050123";
-import { openModal } from "../components/modal.js?v=2026050123";
+import { openModal } from "../components/modal.js?v=2026050131";
 import { toast } from "../components/toast.js?v=2026050123";
 import { applyPreferences, currentLanguage, currentTheme, setLanguage, setTheme, t } from "../preferences.js?v=2026050123";
 

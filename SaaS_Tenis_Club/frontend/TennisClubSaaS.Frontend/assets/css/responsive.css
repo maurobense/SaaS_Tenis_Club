@@ -1,45 +1,71 @@
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
   .app-shell { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .mobile-nav { display: grid; }
-  .main { padding: 14px 14px 96px; }
+  .main {
+    width: 100%;
+    padding: 18px 18px calc(104px + env(safe-area-inset-bottom));
+  }
   .grid.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .two-col { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .occupancy-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .login-panel { grid-template-columns: 1fr; }
   .login-brand { min-height: 260px; padding: 28px; }
   .login-brand h1 { font-size: 36px; }
-  .topbar { position: sticky; top: 0; z-index: 10; padding: 8px 0; background: color-mix(in srgb, var(--bg), transparent 8%); backdrop-filter: blur(14px); }
+  .topbar { position: sticky; top: 0; z-index: 80; padding: 8px 0; background: color-mix(in srgb, var(--bg), transparent 8%); backdrop-filter: blur(14px); }
   .searchbox { max-width: none; }
   .reservation-filter-form { grid-template-columns: minmax(170px, 220px) minmax(200px, 1fr) auto; }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 760px) {
   :root { --radius: 16px; }
-  .topbar { min-height: auto; grid-template-columns: 1fr; align-items: stretch; gap: 10px; margin-bottom: 14px; }
-  .topbar-actions { order: 1; width: 100%; justify-content: space-between; }
-  .searchbox { order: 2; max-width: none; }
-  .searchbox input { min-height: 48px; }
+  .main { padding: 12px 12px calc(96px + env(safe-area-inset-bottom)); }
+  .page { gap: 16px; max-width: 100%; }
+  .topbar { min-height: auto; grid-template-columns: 1fr auto; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .topbar-actions { order: 1; width: auto; justify-content: end; gap: 8px; }
+  .searchbox { order: 2; grid-column: 1 / -1; max-width: none; }
+  .searchbox input { min-height: 46px; padding-inline: 42px 16px; font-size: 14px; }
+  .search-icon { left: 16px; }
   .global-search-panel { max-height: 58vh; }
+  .theme-switch { width: 54px; height: 34px; flex-basis: 54px; }
+  .theme-switch-thumb { width: 22px; height: 22px; }
+  :root[data-theme="dark"] .theme-switch-thumb { transform: translateX(22px); }
+  .user-chip { max-width: none; padding: 6px; gap: 0; }
+  .user-chip > div { display: none; }
+  .user-chip .avatar { flex: 0 0 34px; }
   .page-head { align-items: stretch; flex-direction: column; }
-  .grid.cards { grid-template-columns: 1fr; }
+  .page-head > .btn, .page-head > button { width: 100%; }
+  .grid.cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .page-title { font-size: 24px; }
   .login-form { padding: 24px; }
+  .metric { min-height: 112px; padding: 16px; gap: 8px; }
+  .metric-label, .metric-trend { font-size: 12px; }
   .metric-value { font-size: 26px; }
   .toolbar > * { flex: 1 1 160px; }
-  .user-chip { max-width: calc(100vw - 100px); align-self: auto; }
-  .user-chip .avatar { flex: 0 0 34px; }
-  .panel { padding: 16px; }
+  .panel, .card.panel { padding: 16px; }
+  .dashboard-action { width: 100%; }
+  .occupancy-summary { grid-template-columns: 1fr; }
+  .occupancy-row { grid-template-columns: 1fr; gap: 7px; }
+  .alert-item { grid-template-columns: auto minmax(0, 1fr); }
+  .alert-item .badge { grid-column: 2; justify-self: start; }
   .reservation-filter-form { grid-template-columns: 1fr; gap: 12px; }
   .reservation-filter-button { width: 100%; min-width: 0; }
   .slot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .slot { min-height: 92px; }
+  .court-grid, .class-grid { grid-template-columns: 1fr; gap: 12px; }
+  .court-card, .class-card { padding: 16px; }
+  .court-card-head { align-items: start; }
+  .court-card-head h2 { font-size: 22px; }
+  .court-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .court-meta div { padding: 9px; }
   .table { min-width: 0; }
+  .table-wrap { overflow: visible; }
   .table thead { display: none; }
   .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
   .table tr { border: 1px solid var(--border); border-radius: 16px; padding: 10px; margin-bottom: 10px; background: var(--surface); }
-  .table td { border: 0; padding: 7px 6px; }
+  .table td { border: 0; padding: 7px 6px; min-height: 0; }
   .table td:not(:first-child) { color: var(--muted); }
-  .class-grid { grid-template-columns: 1fr; }
   .booking-hero { grid-template-columns: 1fr; }
   .booking-stats { grid-template-columns: repeat(3, 1fr); }
   .booking-stats div { padding: 10px; }
@@ -54,16 +80,20 @@
   .detail-grid, .activity-grid { grid-template-columns: 1fr; }
   .attendance-row { grid-template-columns: 1fr; }
   .preference-strip { grid-template-columns: 1fr; }
-  .court-meta { grid-template-columns: 1fr; }
   .tenant-modal { width: min(100%, calc(100vw - 20px)); }
   .admin-row { align-items: stretch; flex-direction: column; }
-  .mobile-nav { left: 10px; right: 10px; bottom: 10px; border-radius: 20px; }
-  .mobile-nav button { min-width: 0; }
+  .mobile-nav { border-radius: 20px; }
+  .mobile-nav button { min-width: 0; min-height: 48px; }
 }
 
 @media (max-width: 420px) {
+  .main { padding-inline: 10px; }
+  .grid.cards { grid-template-columns: 1fr; }
   .slot-grid, .slot-grid.pro { grid-template-columns: 1fr; }
   .booking-stats { grid-template-columns: 1fr; }
   .search-result { grid-template-columns: 1fr; align-items: start; }
   .search-result-type { max-width: 100%; }
+  .court-meta { grid-template-columns: 1fr; }
+  .mobile-nav { left: 8px; right: 8px; padding: 7px; }
+  .mobile-nav button { font-size: 10px; padding-inline: 2px; }
 }

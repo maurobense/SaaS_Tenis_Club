@@ -1,7 +1,8 @@
 .sidebar {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
   padding: 24px 18px;
   background: linear-gradient(180deg, #07111f, #0b1628);
   color: white;
@@ -26,6 +27,22 @@
   border-radius: 14px;
   text-align: left;
 }
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 22px;
+  color: currentColor;
+  opacity: .92;
+}
+.nav-icon svg,
+.mobile-nav-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.nav-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .nav-link:hover, .nav-link.active { background: rgba(255,255,255,.1); color: white; box-shadow: inset 3px 0 0 var(--secondary); }
 .topbar {
   min-height: 68px;
@@ -35,7 +52,11 @@
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
+  position: relative;
+  z-index: 40;
+  transition: margin-bottom .18s ease;
 }
+.topbar.search-open { align-items: center; }
 .searchbox {
   width: 100%;
   position: relative;
@@ -82,16 +103,16 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + 10px);
-  z-index: 25;
+  top: calc(100% + 12px);
+  z-index: 120;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
-  box-shadow: 0 22px 54px rgba(15,23,42,.16);
-  padding: 10px;
+  box-shadow: 0 24px 68px rgba(15,23,42,.18);
+  padding: 8px;
   display: grid;
   gap: 6px;
-  max-height: min(420px, 66vh);
+  max-height: min(320px, 52vh);
   overflow: auto;
   animation: searchPanelIn .14s ease-out;
 }
@@ -193,9 +214,34 @@
   transform: translate(5px, -3px) scale(.95);
 }
 .avatar { width: 34px; height: 34px; border-radius: 50%; background: color-mix(in srgb, var(--primary), white 18%); color: white; display: grid; place-items: center; font-weight: 800; }
-.mobile-nav { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; background: rgba(7,17,31,.94); backdrop-filter: blur(16px); border-radius: 22px; padding: 8px; z-index: 20; grid-template-columns: repeat(5, 1fr); box-shadow: var(--shadow); }
-.mobile-nav button { border: 0; background: transparent; color: rgba(255,255,255,.72); padding: 9px 4px; border-radius: 14px; font-size: 11px; display: grid; gap: 3px; place-items: center; }
+.mobile-nav { display: none; position: fixed; left: max(10px, env(safe-area-inset-left)); right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); background: rgba(7,17,31,.94); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; padding: 8px; z-index: 900; grid-template-columns: repeat(5, minmax(0, 1fr)); box-shadow: 0 18px 48px rgba(2,6,23,.3); }
+.mobile-nav button { border: 0; background: transparent; color: rgba(255,255,255,.72); padding: 9px 4px; border-radius: 14px; font-size: 11px; display: grid; gap: 3px; place-items: center; min-width: 0; }
+.mobile-nav button span { max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mobile-nav-icon { width: 22px; height: 22px; display: grid; place-items: center; }
+.mobile-nav button span:first-child { line-height: 1; }
 .mobile-nav button.active { color: white; background: rgba(255,255,255,.1); }
+
+@media (min-width: 1181px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 270px;
+    z-index: 200;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 8px 0 14px;
+    background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg), transparent 8%) 78%, transparent 100%);
+    backdrop-filter: blur(14px);
+  }
+
+  :root[data-theme="dark"] .topbar {
+    background: linear-gradient(180deg, rgba(11, 18, 32, .94) 0%, rgba(11, 18, 32, .72) 76%, rgba(11, 18, 32, 0) 100%);
+  }
+}
 
 @keyframes searchPanelIn {
   from { opacity: 0; transform: translateY(-4px) scale(.99); }

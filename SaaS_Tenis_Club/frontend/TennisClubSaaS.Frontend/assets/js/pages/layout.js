@@ -1,5 +1,5 @@
-import { sidebar, mobileNav } from "../components/sidebar.js?v=2026050124";
-import { navbar } from "../components/navbar.js?v=2026050128";
+import { sidebar, mobileNav } from "../components/sidebar.js?v=2026050137";
+import { navbar } from "../components/navbar.js?v=2026050131";
 import { auth } from "../auth.js?v=2026050125";
 
 export function layout(content, hash) {

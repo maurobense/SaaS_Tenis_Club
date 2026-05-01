@@ -1,6 +1,6 @@
 import { apiClient } from "../apiClient.js?v=2026050123";
 import { badge } from "../components/cards.js?v=2026050123";
-import { openModal } from "../components/modal.js?v=2026050123";
+import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050123";
 import { toast } from "../components/toast.js?v=2026050123";
 import { translateElement } from "../preferences.js?v=2026050123";

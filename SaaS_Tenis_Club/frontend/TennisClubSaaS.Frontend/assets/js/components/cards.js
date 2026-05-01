@@ -23,6 +23,8 @@ function translateBadge(text) {
     Overdue: "Vencido",
     Cancelled: "Cancelado",
     Pending: "Pendiente",
+    Failed: "Fallido",
+    Refunded: "Reembolsado",
     NoShow: "No-show",
     WaitingList: "Lista de espera",
     Inactive: "Inactivo",

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TennisClubSaaS.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa0a2f7a8c10d15085ce6b4e72f670ce0a721d85")]
 [assembly: System.Reflection.AssemblyProductAttribute("TennisClubSaaS.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TennisClubSaaS.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

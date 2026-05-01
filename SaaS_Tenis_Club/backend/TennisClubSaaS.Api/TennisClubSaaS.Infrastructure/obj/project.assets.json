@@ -4542,11 +4542,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
+      "projectUniqueName": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
       "projectName": "TennisClubSaaS.Infrastructure",
-      "projectPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
+      "projectPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\mauro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\obj\\",
+      "outputPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4568,8 +4568,8 @@
           "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {
-              "projectPath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj"
+            "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj": {
+              "projectPath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj"
             }
           }
         }

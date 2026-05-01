@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KISFdJap1pg=",
+  "dgSpecHash": "DGwviXqSJo0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
+  "projectFilePath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Infrastructure\\TennisClubSaaS.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mauro\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\mauro\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

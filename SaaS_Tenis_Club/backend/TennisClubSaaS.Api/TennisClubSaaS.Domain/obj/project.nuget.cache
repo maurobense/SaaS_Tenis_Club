@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UOywwlF1i6A=",
+  "dgSpecHash": "tcpMayTZbpo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
+  "projectFilePath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Domain\\TennisClubSaaS.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

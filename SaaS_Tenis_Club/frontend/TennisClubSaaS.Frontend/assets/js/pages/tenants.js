@@ -1,6 +1,6 @@
 import { apiClient } from "../apiClient.js?v=2026050124";
 import { badge } from "../components/cards.js?v=2026050124";
-import { openModal } from "../components/modal.js?v=2026050124";
+import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050124";
 import { toast } from "../components/toast.js?v=2026050124";
 import { translateElement } from "../preferences.js?v=2026050126";
@@ -82,8 +82,8 @@ function renderTenantRow(tenant) {
     </td>
     <td>${escapeHtml(tenant.contactEmail || "-")}<div class="muted">${escapeHtml(tenant.contactPhone || "")}</div></td>
     <td>
-      ${isPlatform ? badge("Plataforma") : badge(tenant.isActive ? "Activo" : "Inactivo", tenant.isActive ? "Active" : "Cancelled")}
-      <div class="muted">${escapeHtml(billingStatusLabel(tenant.billingStatus))}</div>
+      ${isPlatform ? badge("Plataforma") : badge(tenant.isActive ? "Operativo" : "Pausado", tenant.isActive ? "Active" : "Cancelled")}
+      <div class="muted">${escapeHtml(isPlatform ? "Tenant interno" : billingStatusLabel(tenant.billingStatus))}</div>
     </td>
     <td>
       <div class="table-actions">
@@ -140,6 +140,7 @@ function openTenantModal(tenant = null) {
       <button class="btn" type="submit">${isEdit ? "Guardar club" : "Crear club"}</button>
     </form>`
   });
+  modal.querySelector(".modal")?.classList.add("tenant-modal");
 
   modal.querySelector("#tenant-form").addEventListener("submit", async event => {
     event.preventDefault();
@@ -354,7 +355,7 @@ function planLabel(value) {
 }
 
 function billingStatusLabel(value) {
-  return ({ 1: "Prueba", 2: "Activo", 3: "Pago vencido", 4: "Suspendido", 5: "Cancelado" })[Number(value)] || "Prueba";
+  return ({ 1: "En prueba", 2: "Facturacion al dia", 3: "Pago vencido", 4: "Suspendido", 5: "Cancelado" })[Number(value)] || "En prueba";
 }
 
 function planOptions(selected = 2) {

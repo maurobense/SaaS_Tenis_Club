@@ -1,7 +1,7 @@
 import { apiClient } from "../apiClient.js?v=2026050123";
 import { auth } from "../auth.js?v=2026050123";
-import { badge } from "../components/cards.js?v=2026050123";
-import { openModal } from "../components/modal.js?v=2026050123";
+import { badge } from "../components/cards.js?v=2026050129";
+import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050123";
 import { toast } from "../components/toast.js?v=2026050123";
 import { translateElement, translateLiteral } from "../preferences.js?v=2026050123";
@@ -60,7 +60,7 @@ function renderPaymentsTable(rows, showMember) {
     <td>${money(p.amount)}</td>
     <td>${formatDate(p.paymentDate)}</td>
     <td>${badge(methodLabel(p.paymentMethod))}</td>
-    <td>${badge(p.status)}</td>
+    <td>${badge(paymentStatusLabel(p.status), paymentStatusTone(p.status))}</td>
     <td>${escapeHtml(p.reference || "")}</td>
   </tr>`);
   return table(headers, body);
@@ -183,6 +183,29 @@ function purposeTone(value) {
 function methodLabel(value) {
   const labels = { 1: "Cash", 2: "BankTransfer", 3: "Card", 4: "MercadoPago", 5: "Other" };
   return labels[value] || value || "-";
+}
+
+function paymentStatusLabel(value) {
+  const labels = {
+    1: "Pending",
+    2: "Paid",
+    3: "Failed",
+    4: "Refunded",
+    5: "Cancelled",
+    Pending: "Pending",
+    Paid: "Paid",
+    Failed: "Failed",
+    Refunded: "Refunded",
+    Cancelled: "Cancelled"
+  };
+  return labels[value] || value || "Pending";
+}
+
+function paymentStatusTone(value) {
+  const normalized = paymentStatusLabel(value);
+  if (normalized === "Paid" || normalized === "Refunded") return "Paid";
+  if (normalized === "Failed" || normalized === "Cancelled") return "Cancelled";
+  return "Pending";
 }
 
 function referenceForPurpose(value) {

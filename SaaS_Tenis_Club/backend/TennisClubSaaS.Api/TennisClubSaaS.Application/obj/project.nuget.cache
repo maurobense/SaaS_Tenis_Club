@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "e4c4CDwe6RI=",
+  "dgSpecHash": "7LR+KyZM4MQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mauro\\Documents\\Codex\\2026-05-01\\quiero-que-construyas-una-aplicaci-n\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
+  "projectFilePath": "C:\\software\\SaaS_Tenis_Club\\SaaS_Tenis_Club\\backend\\TennisClubSaaS.Api\\TennisClubSaaS.Application\\TennisClubSaaS.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mauro\\.nuget\\packages\\fluentvalidation\\11.9.2\\fluentvalidation.11.9.2.nupkg.sha512"
   ],
