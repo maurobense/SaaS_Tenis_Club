@@ -1,4 +1,4 @@
-import { sidebar, mobileNav } from "../components/sidebar.js?v=2026050137";
+import { sidebar, mobileNav } from "../components/sidebar.js?v=2026050201";
 import { navbar } from "../components/navbar.js?v=2026050131";
 import { auth } from "../auth.js?v=2026050125";
 

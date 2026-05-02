@@ -5,8 +5,9 @@ import { toast } from "../components/toast.js?v=2026050123";
 import { translateElement } from "../preferences.js?v=2026050123";
 
 export async function coachesPage() {
-  const rows = await apiClient.get("/api/coaches").catch(() => [
-    { id: "55555555-5555-5555-5555-555555555555", name: "Carla Profesora", specialty: "Competicion y adultos", isActive: true }
+  const [rows, classes] = await Promise.all([
+    apiClient.get("/api/coaches").catch(() => []),
+    apiClient.get("/api/classes").catch(() => [])
   ]);
 
   setTimeout(() => {
@@ -22,11 +23,11 @@ export async function coachesPage() {
     </div>
     <div class="grid cards">${[
       { label: "Profesores activos", value: rows.filter(x => x.isActive !== false).length, trend: "habilitados" },
-      { label: "Clases asignadas", value: "2", trend: "semana actual" },
-      { label: "Asistencia", value: "91%", trend: "promedio reciente" },
-      { label: "Notas pendientes", value: "5", trend: "seguimiento" }
+      { label: "Clases asignadas", value: classes.length, trend: "activas" },
+      { label: "Inactivos", value: rows.filter(x => x.isActive === false || x.userIsActive === false).length, trend: "sin acceso" },
+      { label: "Total profesores", value: rows.length, trend: "en el club" }
     ].map(x=>`<article class="card metric"><span class="metric-label">${x.label}</span><strong class="metric-value">${x.value}</strong><span class="metric-trend">${x.trend}</span></article>`).join("")}</div>
-    <article class="card panel">${table(["Profesor","Usuario","Especialidad","Estado","Accion"], rows.map(c => `<tr><td><strong>${c.name || "Profesor"}</strong></td><td><div>${c.email || "-"}</div><div class="muted">${c.phone || "Sin telefono"}</div></td><td>${c.specialty || "-"}</td><td><span class="badge ${c.isActive === false || c.userIsActive === false ? "danger" : "success"}">${c.isActive === false || c.userIsActive === false ? "Inactivo" : "Activo"}</span></td><td><div class="table-actions"><button class="btn ghost" data-view-coach-classes="${c.id}" data-coach-name="${escapeAttr(c.name || "Profesor")}">Ver clases</button><button class="btn ghost" data-reset-coach-password="${c.id}" data-coach-name="${escapeAttr(c.name || "Profesor")}">Resetear clave</button></div></td></tr>`))}</article>
+    <article class="card panel">${rows.length ? table(["Profesor","Usuario","Especialidad","Estado","Accion"], rows.map(c => `<tr><td><strong>${c.name || "Profesor"}</strong></td><td><div>${c.email || "-"}</div><div class="muted">${c.phone || "Sin telefono"}</div></td><td>${c.specialty || "-"}</td><td><span class="badge ${c.isActive === false || c.userIsActive === false ? "danger" : "success"}">${c.isActive === false || c.userIsActive === false ? "Inactivo" : "Activo"}</span></td><td><div class="table-actions"><button class="btn ghost" data-view-coach-classes="${c.id}" data-coach-name="${escapeAttr(c.name || "Profesor")}">Ver clases</button><button class="btn ghost" data-reset-coach-password="${c.id}" data-coach-name="${escapeAttr(c.name || "Profesor")}">Resetear clave</button></div></td></tr>`)) : `<div class="empty-state compact-empty"><strong>Sin profesores cargados</strong><span>Los profesores aparecen aca cuando crees el primer usuario profesor.</span></div>`}</article>
   </section>`;
 }
 

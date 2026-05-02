@@ -1,8 +1,10 @@
-import { apiClient } from "../apiClient.js?v=2026050124";
+import { apiClient } from "../apiClient.js?v=2026050201";
 import { badge } from "../components/cards.js?v=2026050124";
+import { config } from "../config.js?v=2026050145";
 import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050124";
 import { toast } from "../components/toast.js?v=2026050124";
+import { tenantPortalUrl } from "../tenantContext.js?v=2026050145";
 import { translateElement } from "../preferences.js?v=2026050126";
 
 export async function tenantsPage() {
@@ -32,7 +34,7 @@ export async function tenantsPage() {
     </div>
 
     <article class="card panel">
-      ${tenants.length ? table(["Club", "Slug", "Plan", "Contacto", "Estado", "Acciones"], tenants.map(renderTenantRow)) : emptyState("Sin clubes", "Crea el primer club cliente del SaaS.")}
+      ${tenants.length ? table(["Club", "Slug", "Acceso", "Plan", "Contacto", "Estado", "Acciones"], tenants.map(renderTenantRow)) : emptyState("Sin clubes", "Crea el primer club cliente.")}
     </article>
   </section>`;
 }
@@ -65,16 +67,33 @@ function wireTenantPage(tenants) {
       toast("Slug copiado.");
     });
   });
+
+  document.querySelectorAll("[data-copy-link]").forEach(button => {
+    button.addEventListener("click", async () => {
+      await navigator.clipboard?.writeText(button.dataset.copyLink || "");
+      toast("Link de acceso copiado.");
+    });
+  });
 }
 
 function renderTenantRow(tenant) {
   const isPlatform = tenant.slug === "platform";
+  const portalUrl = tenantPortalUrl(tenant.slug, config.frontendBaseUrl);
   return `<tr>
     <td>
-      <strong>${escapeHtml(tenant.name)}</strong>
-      <div class="muted">${escapeHtml(tenant.address || "Sin direccion cargada")}</div>
+      <div class="tenant-cell">
+        ${tenantLogo(tenant)}
+        <div>
+          <strong>${escapeHtml(tenant.name)}</strong>
+          <div class="muted">${escapeHtml(tenant.address || "Sin direccion cargada")}</div>
+        </div>
+      </div>
     </td>
     <td><button class="tenant-slug" data-copy-slug="${escapeAttr(tenant.slug)}" title="Copiar slug">${escapeHtml(tenant.slug)}</button></td>
+    <td>
+      <button class="btn ghost" data-copy-link="${escapeAttr(portalUrl)}">Copiar link</button>
+      <div class="muted">/${escapeHtml(tenant.slug)}/</div>
+    </td>
     <td>
       <strong>${escapeHtml(planLabel(tenant.planType))}</strong>
       <div class="muted">${formatMoney(tenant.monthlyPrice, tenant.billingCurrency)} / mes</div>
@@ -100,6 +119,13 @@ function openTenantModal(tenant = null) {
   const modal = openModal({
     title: isEdit ? "Editar club" : "Nuevo club",
     content: `<form id="tenant-form" class="grid">
+      <div class="tenant-logo-editor">
+        ${tenantLogo(tenant || { name: "Nuevo club" }, "tenant-logo-preview")}
+        <div>
+          <strong>Identidad del club</strong>
+          <p class="form-hint">El logo se ve en el login, menu lateral y listado de clubes.</p>
+        </div>
+      </div>
       <div class="grid two-fields">
         <div class="field"><label>Nombre del club</label><input name="name" required value="${escapeAttr(tenant?.name || "")}" placeholder="Ej: Carrasco Lawn Tennis"></div>
         <div class="field"><label>Slug</label><input name="slug" required value="${escapeAttr(tenant?.slug || "")}" placeholder="carrasco-tenis" ${tenant?.slug === "platform" ? "readonly" : ""}></div>
@@ -109,7 +135,10 @@ function openTenantModal(tenant = null) {
         <div class="field"><label>Telefono</label><input name="contactPhone" value="${escapeAttr(tenant?.contactPhone || "")}" placeholder="Opcional"></div>
       </div>
       <div class="field"><label>Direccion</label><input name="address" value="${escapeAttr(tenant?.address || "")}" placeholder="Montevideo, Uruguay"></div>
-      <div class="field"><label>Logo URL</label><input name="logoUrl" value="${escapeAttr(tenant?.logoUrl || "")}" placeholder="https://..."></div>
+      <div class="grid two-fields">
+        <div class="field"><label>Logo URL</label><input name="logoUrl" value="${escapeAttr(tenant?.logoUrl || "")}" placeholder="https://..."></div>
+        <div class="field"><label>Subir logo</label><input name="logoFile" type="file" accept="image/png,image/jpeg,image/webp"><small class="form-hint">Opcional. Reemplaza la URL al guardar.</small></div>
+      </div>
       <div class="tenant-admin-box">
         <div>
           <strong>Plan comercial</strong>
@@ -142,13 +171,26 @@ function openTenantModal(tenant = null) {
   });
   modal.querySelector(".modal")?.classList.add("tenant-modal");
 
+  const logoUrlInput = modal.querySelector("input[name='logoUrl']");
+  const logoFileInput = modal.querySelector("input[name='logoFile']");
+  logoUrlInput?.addEventListener("input", () => updateTenantLogoPreview(modal, logoUrlInput.value, tenant?.name || "Club"));
+  logoFileInput?.addEventListener("change", () => previewTenantLogoFile(modal, logoFileInput.files?.[0]));
+
   modal.querySelector("#tenant-form").addEventListener("submit", async event => {
     event.preventDefault();
-    const values = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form).entries());
+    const logoFile = form.elements.logoFile?.files?.[0];
     const payload = tenantPayload(values);
     const savedTenant = isEdit
       ? await apiClient.put(`/api/tenants/${tenant.id}`, payload)
       : await apiClient.post("/api/tenants", payload);
+
+    if (logoFile) {
+      const data = new FormData();
+      data.append("file", logoFile);
+      await apiClient.upload(`/api/tenant-assets/${savedTenant.id}/logo`, data);
+    }
 
     if (!isEdit && values.adminEmail) {
       await createTenantAdmin(savedTenant.id, values);
@@ -333,6 +375,34 @@ function metric(label, value, trend) {
   return `<article class="card metric"><span class="metric-label">${label}</span><strong class="metric-value">${value}</strong><span class="metric-trend">${trend}</span></article>`;
 }
 
+function tenantLogo(tenant, extraClass = "") {
+  const name = tenant?.name || "Club";
+  const className = `tenant-logo ${extraClass}`.trim();
+  return tenant?.logoUrl
+    ? `<span class="${className}"><img src="${escapeAttr(tenant.logoUrl)}" alt="${escapeAttr(name)}"></span>`
+    : `<span class="${className}">${initials(name)}</span>`;
+}
+
+function updateTenantLogoPreview(modal, logoUrl, name) {
+  const preview = modal.querySelector(".tenant-logo-preview");
+  if (!preview) return;
+
+  preview.innerHTML = logoUrl
+    ? `<img src="${escapeAttr(logoUrl)}" alt="${escapeAttr(name)}">`
+    : escapeHtml(initials(name));
+}
+
+function previewTenantLogoFile(modal, file) {
+  if (!file) return;
+  const preview = modal.querySelector(".tenant-logo-preview");
+  if (!preview) return;
+
+  const url = URL.createObjectURL(file);
+  preview.innerHTML = `<img src="${escapeAttr(url)}" alt="Vista previa del logo">`;
+  const image = preview.querySelector("img");
+  image?.addEventListener("load", () => URL.revokeObjectURL(url), { once: true });
+}
+
 function emptyState(title, text) {
   return `<div class="empty-state"><strong>${title}</strong><span>${text}</span></div>`;
 }
@@ -401,6 +471,15 @@ function numberOrNull(value) {
   const number = Number(value);
   if (!Number.isFinite(number)) return null;
   return number < 0 ? null : number;
+}
+
+function initials(value) {
+  return String(value || "Club")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0]?.toUpperCase() || "")
+    .join("") || "C";
 }
 
 function escapeHtml(value) {

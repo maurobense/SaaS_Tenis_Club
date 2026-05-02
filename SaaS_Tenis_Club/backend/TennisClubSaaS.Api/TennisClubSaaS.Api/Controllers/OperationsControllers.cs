@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TennisClubSaaS.Api.Extensions;
 using TennisClubSaaS.Application.DTOs;
 using TennisClubSaaS.Application.Interfaces;
 using TennisClubSaaS.Domain.Entities;
@@ -119,9 +120,10 @@ public class MemberDirectoryController(IUnitOfWork uow) : ControllerBase
         .ToList()));
 }
 
-[Authorize(Roles = "ClubAdmin,SuperAdmin")]
+[Authorize]
 public class PaymentsController(IUnitOfWork uow, ITenantProvider tenant) : BaseApiController
 {
+    [Authorize(Roles = "ClubAdmin,SuperAdmin")]
     [HttpGet] public IActionResult Get() => Ok(ApiResponse<object>.Ok(uow.Repository<Payment>().Query().OrderByDescending(x => x.PaymentDate).Select(x => new PaymentDto(
         x.Id,
         x.MemberProfileId,
@@ -136,7 +138,51 @@ public class PaymentsController(IUnitOfWork uow, ITenantProvider tenant) : BaseA
         x.Status,
         x.Reference,
         x.Notes)).ToList()));
+
+    [Authorize(Roles = "Member")]
+    [HttpGet("me")]
+    public IActionResult Me()
+    {
+        var profile = uow.Repository<MemberProfile>().Query().FirstOrDefault(x => x.UserId == User.UserId());
+        if (profile is null) return NotFound(ApiResponse<object>.Fail("Socio no encontrado."));
+
+        var memberships = uow.Repository<Membership>().Query().Where(x => x.MemberProfileId == profile.Id).ToList();
+        var rows = uow.Repository<Payment>().Query()
+            .Where(x => x.MemberProfileId == profile.Id)
+            .OrderByDescending(x => x.PaymentDate)
+            .Select(x => new PaymentDto(
+                x.Id,
+                x.MemberProfileId,
+                x.MemberProfile != null && x.MemberProfile.User != null ? x.MemberProfile.User.FirstName + " " + x.MemberProfile.User.LastName : null,
+                x.MembershipId,
+                x.ReservationId,
+                x.Reservation != null && x.Reservation.Court != null ? x.Reservation.Court.Name + " - " + x.Reservation.StartDateTime.ToString("dd/MM HH:mm") : null,
+                x.Purpose,
+                x.Amount,
+                x.PaymentDate,
+                x.PaymentMethod,
+                x.Status,
+                x.Reference,
+                x.Notes))
+            .ToList();
+        var latestMembership = memberships.OrderByDescending(x => x.Year).ThenByDescending(x => x.Month).FirstOrDefault();
+        var pendingAmount = memberships.Where(x => x.Status == MonthlyMembershipStatus.Pending || x.Status == MonthlyMembershipStatus.Overdue).Sum(x => x.Amount);
+        var lastPaid = rows.Where(x => x.Status == PaymentStatus.Paid).OrderByDescending(x => x.PaymentDate).FirstOrDefault();
+
+        return Ok(ApiResponse<object>.Ok(new
+        {
+            membershipStatus = profile.MembershipStatus.ToString(),
+            pendingAmount,
+            dueFromDay = latestMembership?.DueFromDay ?? 1,
+            dueToDay = latestMembership?.DueToDay ?? 10,
+            lastPaymentAmount = lastPaid?.Amount ?? 0,
+            payments = rows
+        }));
+    }
+
+    [Authorize(Roles = "ClubAdmin,SuperAdmin")]
     [HttpGet("overdue")] public IActionResult Overdue() => Ok(ApiResponse<object>.Ok(uow.Repository<Membership>().Query().Where(x => x.Status == MonthlyMembershipStatus.Overdue).ToList()));
+    [Authorize(Roles = "ClubAdmin,SuperAdmin")]
     [HttpPost] public async Task<IActionResult> Post(CreatePaymentRequest request, CancellationToken ct)
     {
         var tenantId = tenant.CurrentTenantId ?? Guid.Empty;
@@ -198,6 +244,7 @@ public class PaymentsController(IUnitOfWork uow, ITenantProvider tenant) : BaseA
         await uow.SaveChangesAsync(ct);
         return Ok(ApiResponse<Guid>.Ok(payment.Id, "Pago registrado."));
     }
+    [Authorize(Roles = "ClubAdmin,SuperAdmin")]
     [HttpPatch("{id:guid}/mark-paid")] public async Task<IActionResult> MarkPaid(Guid id, CancellationToken ct)
     {
         var p = await uow.Repository<Payment>().GetByIdAsync(id, ct);
@@ -209,6 +256,7 @@ public class PaymentsController(IUnitOfWork uow, ITenantProvider tenant) : BaseA
         await uow.SaveChangesAsync(ct);
         return Ok(ApiResponse<bool>.Ok(true));
     }
+    [Authorize(Roles = "ClubAdmin,SuperAdmin")]
     [HttpGet("monthly-summary")] public IActionResult Summary() => Ok(ApiResponse<object>.Ok(uow.Repository<Payment>().Query().Where(x => x.PaymentDate.Month == DateTime.UtcNow.Month && x.Status == PaymentStatus.Paid).GroupBy(x => new { x.PaymentMethod, x.Purpose }).Select(g => new { Method = g.Key.PaymentMethod, g.Key.Purpose, Total = g.Sum(x => x.Amount), Count = g.Count() }).ToList()));
 }
 

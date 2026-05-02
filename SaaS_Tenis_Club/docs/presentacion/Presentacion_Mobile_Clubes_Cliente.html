@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Presentacion mobile para clubes</title>
+  <style>
+    @page { size: 9in 16in; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: #e8eef6;
+      color: #07111f;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide {
+      width: 9in;
+      height: 16in;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      padding: .58in .56in;
+      background: #f8fafc;
+    }
+    .slide:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 92% 2%, rgba(37, 99, 235, .12), transparent 29%),
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,0));
+    }
+    .ink { background: #06111f; color: #f8fafc; }
+    .ink:before {
+      background:
+        radial-gradient(circle at 88% 0%, rgba(37,99,235,.34), transparent 30%),
+        radial-gradient(circle at 8% 95%, rgba(16,185,129,.24), transparent 31%),
+        linear-gradient(145deg, #06111f, #10243e);
+    }
+    .brand { position: relative; z-index: 2; display: flex; align-items: center; gap: 14px; }
+    .mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 950;
+      font-size: 25px;
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      box-shadow: 0 20px 54px rgba(16, 185, 129, .22);
+    }
+    .brand b { display: block; font-size: 22px; letter-spacing: 0; }
+    .brand span { display: block; margin-top: 2px; color: #8ea0b8; font-size: 15px; }
+    .ink .brand span { color: #aab8ca; }
+    h1, h2, h3, p { position: relative; z-index: 2; margin: 0; letter-spacing: 0; }
+    h1 { margin-top: .94in; max-width: 7.2in; font-size: 50px; line-height: .99; }
+    h2 { max-width: 7.35in; font-size: 40px; line-height: 1.04; }
+    h3 { font-size: 25px; line-height: 1.08; }
+    p { color: #52627a; font-size: 20px; line-height: 1.4; }
+    .ink p { color: #cbd5e1; }
+    .lead { margin-top: .22in; font-size: 24px; line-height: 1.35; max-width: 7.25in; }
+    .eyebrow {
+      position: relative;
+      z-index: 2;
+      margin: 0 0 14px;
+      color: #2563eb;
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+    .ink .eyebrow { color: #67e8f9; }
+    .badges { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; margin-top: .28in; }
+    .badge {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 7px 13px;
+      background: #eaf1ff;
+      color: #1d4ed8;
+      font-weight: 850;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .ink .badge { color: #dff7ff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.12); }
+    .page { position: absolute; right: .5in; bottom: .34in; z-index: 2; color: #8ea0b8; font-size: 13px; font-weight: 850; letter-spacing: .12em; }
+    .section { margin-top: .62in; }
+    .section p { margin-top: .14in; }
+    .phone-layout {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: .24in;
+      height: 14.84in;
+      position: relative;
+      z-index: 2;
+    }
+    .phone-copy h2 { margin-top: .08in; }
+    .phone-copy p { margin-top: .12in; font-size: 19px; }
+    .phone-stage { display: grid; place-items: center; min-height: 0; }
+    .phone {
+      width: 4.05in;
+      padding: .12in;
+      border-radius: .48in;
+      background: #020617;
+      box-shadow: 0 30px 86px rgba(15, 23, 42, .28);
+    }
+    .phone img { display: block; width: 100%; max-height: 10.5in; object-fit: cover; object-position: top center; border-radius: .34in; }
+    .phone.light { background: #fff; border: 1px solid #dbe4f0; }
+    .cards { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; gap: .16in; margin-top: .34in; }
+    .cards.two { grid-template-columns: 1fr 1fr; }
+    .card {
+      border: 1px solid #dbe4f0;
+      border-radius: 22px;
+      background: rgba(255,255,255,.93);
+      padding: .22in;
+      box-shadow: 0 17px 42px rgba(15, 23, 42, .08);
+    }
+    .card b { display: block; font-size: 22px; line-height: 1.12; margin-bottom: 7px; }
+    .card span { display: block; color: #64748b; font-size: 17px; line-height: 1.32; }
+    .link-box {
+      position: relative;
+      z-index: 2;
+      margin-top: .38in;
+      padding: .24in .26in;
+      border-radius: 26px;
+      background: #fff;
+      border: 1px solid #dbe4f0;
+      box-shadow: 0 20px 58px rgba(15,23,42,.12);
+    }
+    .link-box b { display: block; font-size: 20px; margin-bottom: .08in; }
+    .link {
+      display: block;
+      padding: .18in;
+      border-radius: 18px;
+      background: #eef5ff;
+      color: #1d4ed8;
+      font-weight: 900;
+      font-size: 18px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+    .steps { position: relative; z-index: 2; display: grid; gap: .14in; margin-top: .28in; }
+    .step {
+      display: grid;
+      grid-template-columns: .52in 1fr;
+      gap: .16in;
+      align-items: start;
+      border-radius: 20px;
+      border: 1px solid #dbe4f0;
+      background: #fff;
+      padding: .18in;
+      box-shadow: 0 15px 38px rgba(15,23,42,.07);
+    }
+    .step i {
+      width: .44in;
+      height: .44in;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #2563eb;
+      color: #fff;
+      font-style: normal;
+      font-weight: 950;
+    }
+    .step b { display: block; font-size: 20px; margin-bottom: 5px; }
+    .step span { display: block; color: #64748b; font-size: 16px; line-height: 1.28; }
+    .mini {
+      position: absolute;
+      left: .56in;
+      right: .56in;
+      bottom: .64in;
+      z-index: 2;
+      color: #7b8aa0;
+      font-size: 14px;
+      line-height: 1.32;
+    }
+    .ink .mini { color: #8fa5bf; }
+    .hero-phone {
+      position: relative;
+      z-index: 2;
+      width: 3.62in;
+      margin: .46in auto 0;
+      padding: .12in;
+      border-radius: .48in;
+      background: #020617;
+      box-shadow: 0 30px 86px rgba(0, 0, 0, .36);
+    }
+    .hero-phone img { display: block; width: 100%; max-height: 8.9in; object-fit: cover; object-position: top center; border-radius: .34in; }
+    .close-box {
+      position: relative;
+      z-index: 2;
+      margin-top: .52in;
+      padding: .32in;
+      border-radius: 28px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .close-box b { display: block; font-size: 25px; margin-bottom: .08in; }
+    .close-box span { display: block; color: #cbd5e1; font-size: 18px; line-height: 1.34; }
+  </style>
+</head>
+<body>
+  <section class="slide ink">
+    <div class="brand"><div class="mark">T</div><div><b>Portal del club</b><span>Reservas y gestion mobile</span></div></div>
+    <h1>Todo lo que el socio necesita, desde el link de su club.</h1>
+    <p class="lead">Reservar cancha, anotarse a clases, revisar pagos y consultar su estado sin escribirle a administracion.</p>
+    <div class="badges"><span class="badge">Sin instalar apps</span><span class="badge">Acceso por link</span><span class="badge">Mobile first</span></div>
+    <div class="hero-phone"><img src="../ventas/screenshots/reservations-mobile-dark.jpg" alt="Reservas mobile del club" /></div>
+    <div class="page">01</div>
+  </section>
+
+  <section class="slide">
+    <div class="brand"><div class="mark">T</div><div><b>Portal del club</b><span>Acceso del socio</span></div></div>
+    <div class="section">
+      <p class="eyebrow">Link propio</p>
+      <h2>El socio entra desde la direccion del club.</h2>
+      <p>Cada club entrega su propio link. Cada socio, profesor o responsable ingresa con su acceso personal.</p>
+    </div>
+    <div class="link-box">
+      <b>Ejemplo de formato</b>
+      <span class="link">https://tenis-club.netlify.app/nombre-del-club/#/login</span>
+    </div>
+    <div class="cards">
+      <article class="card"><b>Identidad del club</b><span>El acceso puede usar el nombre, slug y configuracion de cada club.</span></article>
+      <article class="card"><b>Usuarios propios</b><span>Administracion crea socios, profesores y responsables con sus datos reales.</span></article>
+      <article class="card"><b>Datos separados</b><span>Cada club ve solamente su operacion, reservas, pagos y socios.</span></article>
+    </div>
+    <div class="page">02</div>
+  </section>
+
+  <section class="slide">
+    <div class="phone-layout">
+      <div class="phone-copy">
+        <p class="eyebrow">Reservas</p>
+        <h2>El socio consulta disponibilidad y reserva desde el celular.</h2>
+        <p>La agenda muestra fecha, canchas, turnos libres y ocupados para reducir mensajes y llamados.</p>
+      </div>
+      <div class="phone-stage"><div class="phone"><img src="../ventas/screenshots/reservations-mobile-dark.jpg" alt="Reservas desde celular" /></div></div>
+    </div>
+    <div class="page">03</div>
+  </section>
+
+  <section class="slide">
+    <div class="phone-layout">
+      <div class="phone-copy">
+        <p class="eyebrow">Confirmacion</p>
+        <h2>El club registra socios e invitados en cada reserva.</h2>
+        <p>Singles, dobles, invitados no socios y costos asociados quedan claros antes de confirmar el turno.</p>
+      </div>
+      <div class="phone-stage"><div class="phone"><img src="capturas/mobile-reserva-modal.png" alt="Confirmar reserva" /></div></div>
+    </div>
+    <div class="mini">Los importes y nombres visibles en las capturas son ilustrativos. Cada club define sus reglas y costos.</div>
+    <div class="page">04</div>
+  </section>
+
+  <section class="slide">
+    <div class="phone-layout">
+      <div class="phone-copy">
+        <p class="eyebrow">Clases</p>
+        <h2>Inscripcion a clases con cupos visibles.</h2>
+        <p>El socio puede ver nivel, profesor, cancha, horario y estado de inscripcion desde el telefono.</p>
+      </div>
+      <div class="phone-stage"><div class="phone light"><img src="../ventas/screenshots/classes-mobile-light.jpg" alt="Clases mobile" /></div></div>
+    </div>
+    <div class="page">05</div>
+  </section>
+
+  <section class="slide">
+    <div class="phone-layout">
+      <div class="phone-copy">
+        <p class="eyebrow">Pagos</p>
+        <h2>Estado de membresia y pagos siempre disponibles.</h2>
+        <p>El socio entiende si esta al dia, que tiene pendiente y cuales fueron sus ultimos movimientos.</p>
+      </div>
+      <div class="phone-stage"><div class="phone"><img src="../ventas/screenshots/payments-mobile-dark.jpg" alt="Pagos mobile" /></div></div>
+    </div>
+    <div class="page">06</div>
+  </section>
+
+  <section class="slide">
+    <div class="section">
+      <p class="eyebrow">Operacion diaria</p>
+      <h2>Que gana el club desde el primer dia.</h2>
+      <p>Menos coordinacion manual y mas trazabilidad en reservas, clases, socios y pagos.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><b>Menos mensajes repetidos</b><span>El socio puede consultar disponibilidad y pagos sin depender del chat.</span></article>
+      <article class="card"><b>Reservas ordenadas</b><span>La cancha, horario y jugadores quedan registrados.</span></article>
+      <article class="card"><b>Pagos mas claros</b><span>Membresia, reservas e invitados se pueden separar por concepto.</span></article>
+      <article class="card"><b>Clases con control</b><span>Cupos, profesores y alumnos quedan centralizados.</span></article>
+      <article class="card"><b>Acceso para cada rol</b><span>Administrador, profesor y socio ven pantallas pensadas para su tarea.</span></article>
+    </div>
+    <div class="page">07</div>
+  </section>
+
+  <section class="slide">
+    <div class="section">
+      <p class="eyebrow">Puesta en marcha</p>
+      <h2>Como se empieza con un club.</h2>
+      <p>Primero se configura el club, luego se cargan usuarios y finalmente se comparte el link de acceso.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><i>1</i><div><b>Crear el espacio del club</b><span>Nombre, slug, colores y configuracion inicial.</span></div></div>
+      <div class="step"><i>2</i><div><b>Cargar canchas y reglas</b><span>Horarios, costo de invitados, limites y permisos.</span></div></div>
+      <div class="step"><i>3</i><div><b>Crear usuarios</b><span>Administradores, profesores y socios con sus propios accesos.</span></div></div>
+      <div class="step"><i>4</i><div><b>Compartir el link</b><span>El club envia la direccion a sus socios por WhatsApp, web o redes.</span></div></div>
+    </div>
+    <div class="link-box">
+      <b>Formato para compartir</b>
+      <span class="link">https://tenis-club.netlify.app/slug-del-club/#/login</span>
+    </div>
+    <div class="page">08</div>
+  </section>
+
+  <section class="slide ink">
+    <div class="brand"><div class="mark">T</div><div><b>Portal del club</b><span>Experiencia del socio</span></div></div>
+    <h1>El objetivo: que el socio pueda resolver todo desde su celular.</h1>
+    <p class="lead">El club conserva el control de la operacion, pero baja la carga diaria de mensajes, consultas y planillas paralelas.</p>
+    <div class="close-box"><b>Acceso desde el link propio del club</b><span>Para clientes, el recorrido empieza siempre desde la direccion del club y con usuarios creados por administracion.</span></div>
+    <div class="badges"><span class="badge">Reservas</span><span class="badge">Clases</span><span class="badge">Pagos</span><span class="badge">Socios</span></div>
+    <div class="page">09</div>
+  </section>
+</body>
+</html>

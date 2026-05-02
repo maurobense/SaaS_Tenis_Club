@@ -19,9 +19,9 @@ export async function reservationsPage() {
   const user = auth.user();
   const isAdmin = user?.role === "ClubAdmin" || user?.role === "SuperAdmin";
   const [slots, members, rules] = await Promise.all([
-    apiClient.get(`/api/reservations/available-slots?date=${selectedDate}`).catch(() => demoSlots(selectedDate)),
+    apiClient.get(`/api/reservations/available-slots?date=${selectedDate}`).catch(() => []),
     apiClient.get("/api/members/directory").catch(() => []),
-    apiClient.get("/api/reservations/rules").catch(() => ({ guestPlayerFee: 300, maxReservationsPerWeek: 1, maxClassEnrollmentsPerWeek: 2 }))
+    apiClient.get("/api/reservations/rules").catch(() => ({ guestPlayerFee: 0, maxReservationsPerWeek: 0, maxClassEnrollmentsPerWeek: 0 }))
   ]);
   const allCourts = groupByCourt(slots);
   const visibleSlots = selectedCourt === "all" ? slots : slots.filter(slot => slot.courtName === selectedCourt);
@@ -253,16 +253,3 @@ function escapeHtml(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
-function demoSlots(date) {
-  const courtIds = [
-    "77777777-7777-7777-7777-777777777771",
-    "77777777-7777-7777-7777-777777777772",
-    "77777777-7777-7777-7777-777777777773"
-  ];
-  return courtIds.flatMap((courtId, courtIndex) => Array.from({ length: 7 }, (_, i) => {
-    const start = new Date(`${date}T${String(8 + i * 2).padStart(2, "0")}:00:00`);
-    const end = new Date(start.getTime() + 60 * 60 * 1000);
-    const busy = (i + courtIndex) % 4 === 2;
-    return { courtId, courtName: `Cancha ${courtIndex + 1}`, start, end, isAvailable: !busy, blockReason: busy ? "Reservado" : null };
-  }));
-}

@@ -1,5 +1,5 @@
-import { apiClient } from "../apiClient.js?v=2026050123";
-import { auth } from "../auth.js?v=2026050123";
+import { apiClient } from "../apiClient.js?v=2026050145";
+import { auth } from "../auth.js?v=2026050145";
 import { badge } from "../components/cards.js?v=2026050129";
 import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050123";
@@ -16,11 +16,8 @@ const purpose = {
 export async function paymentsPage() {
   const user = auth.user();
   const isMember = user?.role === "Member";
-  const fallbackRows = [
-    { memberName: "Sofia Socio", purpose: "Membership", amount: 1800, paymentDate: new Date(), paymentMethod: "Cash", status: "Paid", reference: "REC-001" },
-    { memberName: isMember ? "Sofia Socio" : "Reserva invitados", purpose: "CourtGuestFee", amount: 300, paymentDate: new Date(), paymentMethod: "Cash", status: "Paid", reference: "Invitado no socio" }
-  ];
-  const rows = isMember ? fallbackRows : await apiClient.get("/api/payments").catch(() => fallbackRows);
+  const memberData = isMember ? await apiClient.get("/api/payments/me").catch(() => emptyMemberPayments()) : null;
+  const rows = isMember ? (memberData.payments || []) : await apiClient.get("/api/payments").catch(() => []);
   const metrics = buildMetrics(rows);
 
   setTimeout(() => {
@@ -31,10 +28,10 @@ export async function paymentsPage() {
     return `<section class="page">
       <div class="page-head"><div><h1 class="page-title">Mis pagos</h1><p class="page-subtitle">Estado de tu membresia y pagos del club.</p></div></div>
       <div class="grid cards">${[
-        { label: "Membresia", value: "Activa", trend: "al dia" },
-        { label: "Pendiente", value: "$ 0", trend: "sin deuda" },
-        { label: "Vencimientos", value: "1 al 10", trend: "cada mes" },
-        { label: "Ultimo pago", value: "$ 1.800", trend: "registrado" }
+        { label: "Membresia", value: membershipStatusLabel(memberData.membershipStatus), trend: membershipStatusTrend(memberData.membershipStatus) },
+        { label: "Pendiente", value: money(memberData.pendingAmount), trend: Number(memberData.pendingAmount || 0) > 0 ? "a revisar" : "sin deuda" },
+        { label: "Vencimientos", value: `${memberData.dueFromDay || 1} al ${memberData.dueToDay || 10}`, trend: "cada mes" },
+        { label: "Ultimo pago", value: Number(memberData.lastPaymentAmount || 0) > 0 ? money(memberData.lastPaymentAmount) : "-", trend: Number(memberData.lastPaymentAmount || 0) > 0 ? "registrado" : "sin pagos" }
       ].map(metricCard).join("")}</div>
       <article class="card panel">${renderPaymentsTable(rows, false)}</article>
     </section>`;
@@ -53,6 +50,10 @@ export async function paymentsPage() {
 }
 
 function renderPaymentsTable(rows, showMember) {
+  if (!rows.length) {
+    return `<div class="empty-state compact-empty"><strong>Sin pagos registrados</strong><span>Los pagos van a aparecer aca cuando el club registre una membresia, reserva o cobro asociado.</span></div>`;
+  }
+
   const headers = showMember ? ["Motivo", "Socio / Reserva", "Monto", "Fecha", "Metodo", "Estado", "Referencia"] : ["Motivo", "Monto", "Fecha", "Metodo", "Estado", "Referencia"];
   const body = rows.map(p => `<tr>
     <td>${badge(purposeLabel(p.purpose), purposeTone(p.purpose))}</td>
@@ -64,6 +65,17 @@ function renderPaymentsTable(rows, showMember) {
     <td>${escapeHtml(p.reference || "")}</td>
   </tr>`);
   return table(headers, body);
+}
+
+function emptyMemberPayments() {
+  return {
+    membershipStatus: "Active",
+    pendingAmount: 0,
+    dueFromDay: 1,
+    dueToDay: 10,
+    lastPaymentAmount: 0,
+    payments: []
+  };
 }
 
 async function openPaymentModal() {
@@ -206,6 +218,30 @@ function paymentStatusTone(value) {
   if (normalized === "Paid" || normalized === "Refunded") return "Paid";
   if (normalized === "Failed" || normalized === "Cancelled") return "Cancelled";
   return "Pending";
+}
+
+function membershipStatusLabel(value) {
+  const labels = {
+    1: "Activa",
+    2: "Inactiva",
+    3: "Pendiente",
+    4: "Vencida",
+    5: "Suspendida",
+    Active: "Activa",
+    Inactive: "Inactiva",
+    Pending: "Pendiente",
+    Overdue: "Vencida",
+    Suspended: "Suspendida"
+  };
+  return labels[value] || value || "Activa";
+}
+
+function membershipStatusTrend(value) {
+  const normalized = Number(value) || value;
+  if (normalized === 1 || normalized === "Active") return "al dia";
+  if (normalized === 3 || normalized === "Pending") return "pendiente";
+  if (normalized === 4 || normalized === "Overdue") return "requiere pago";
+  return "a revisar";
 }
 
 function referenceForPurpose(value) {

@@ -45,8 +45,9 @@ function linksFor(role) {
 
 export function sidebar(currentHash, user) {
   const links = linksFor(user?.role);
+  const brand = brandFor(user);
   return `<aside class="sidebar">
-    <div class="brand"><div class="brand-mark">T</div><div><div class="brand-title">SaaS Tenis</div><div class="brand-subtitle">${t("appSubtitle")}</div></div></div>
+    <div class="brand"><div class="brand-mark">${brand.logoUrl ? `<img src="${escapeAttr(brand.logoUrl)}" alt="${escapeAttr(brand.title)}">` : escapeHtml(initials(brand.title))}</div><div><div class="brand-title">${escapeHtml(brand.title)}</div><div class="brand-subtitle">${escapeHtml(brand.subtitle)}</div></div></div>
     <nav class="nav-links">${links.map(([href, iconName, label]) => `<a class="nav-link ${currentHash === href ? "active" : ""}" href="${href}"><span class="nav-icon" aria-hidden="true">${icon(iconName)}</span><span class="nav-label">${t(label)}</span></a>`).join("")}</nav>
     <div class="muted" style="padding: 8px 12px; margin-top: auto;">${t(roleLabel[user?.role] || "user")}</div>
     <button class="nav-link" data-action="logout">${t("logout")}</button>
@@ -78,4 +79,42 @@ function icon(name) {
     home: `<path d="m3 11 9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"></path><path d="M9 21v-6h6v6"></path>`
   };
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths[name] || paths["layout-dashboard"]}</svg>`;
+}
+
+function brandFor(user) {
+  if (user?.role === "SuperAdmin") {
+    return { title: "SaaS Tenis", subtitle: t("appSubtitle"), logoUrl: "" };
+  }
+
+  const tenant = safeJson(localStorage.getItem("tenant"));
+  return {
+    title: tenant?.name || "Club",
+    subtitle: "Gestion del club",
+    logoUrl: tenant?.logoUrl || ""
+  };
+}
+
+function initials(value) {
+  return String(value || "Club")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0]?.toUpperCase() || "")
+    .join("") || "C";
+}
+
+function safeJson(value) {
+  try {
+    return JSON.parse(value || "null");
+  } catch {
+    return null;
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+}
+
+function escapeAttr(value) {
+  return escapeHtml(value).replaceAll("'", "&#39;");
 }

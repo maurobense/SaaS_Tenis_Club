@@ -12,6 +12,7 @@ public record PagedResult<T>(IReadOnlyCollection<T> Items, int Total, int Page, 
 
 public record LoginRequest(string Email, string Password, string TenantSlug);
 public record LoginResponse(string AccessToken, string RefreshToken, DateTime ExpiresAt, UserDto User, TenantDto? Tenant);
+public record PublicTenantDto(string Name, string Slug, string? LogoUrl, string PrimaryColor, string SecondaryColor);
 public record RefreshTokenRequest(string RefreshToken);
 public record ChangePasswordRequest(string CurrentPassword, string NewPassword, string ConfirmPassword);
 public record UpdateProfileRequest(string FirstName, string LastName, string? Phone);
@@ -50,4 +51,6 @@ public record PaymentDto(Guid Id, Guid? MemberProfileId, string? MemberName, Gui
 public record CreatePaymentRequest(Guid? MemberProfileId, Guid? MembershipId, Guid? ReservationId, PaymentPurpose Purpose, decimal Amount, PaymentMethod PaymentMethod, string? Reference, string? Notes);
 public record SettingDto(string Key, string Value, SettingValueType ValueType, string? Description);
 public record DashboardCardDto(string Label, string Value, string Trend, string Tone);
-public record AdminDashboardDto(IReadOnlyCollection<DashboardCardDto> Cards, IReadOnlyCollection<ReservationDto> UpcomingReservations, IReadOnlyCollection<PaymentDto> OverduePayments);
+public record WeeklyOccupancyDayDto(string Day, int Percentage, int BookedMinutes, int AvailableMinutes);
+public record WeeklyOccupancyDto(bool HasCapacity, int AveragePercentage, string? PeakDay, int PeakPercentage, int BookedMinutes, int AvailableMinutes, IReadOnlyCollection<WeeklyOccupancyDayDto> Days);
+public record AdminDashboardDto(IReadOnlyCollection<DashboardCardDto> Cards, IReadOnlyCollection<ReservationDto> UpcomingReservations, IReadOnlyCollection<PaymentDto> OverduePayments, WeeklyOccupancyDto WeeklyOccupancy);

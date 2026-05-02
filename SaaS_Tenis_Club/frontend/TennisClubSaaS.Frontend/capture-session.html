@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Capture session</title></head>
+<body>
+<script>
+function decodePayload(value) {
+  value = value.replace(/-/g, "+").replace(/_/g, "/");
+  while (value.length % 4) value += "=";
+  var binary = atob(value);
+  var encoded = "";
+  for (var i = 0; i < binary.length; i += 1) {
+    encoded += "%" + binary.charCodeAt(i).toString(16).padStart(2, "0");
+  }
+  return JSON.parse(decodeURIComponent(encoded));
+}
+var payload = decodePayload(location.hash.slice(1));
+localStorage.clear();
+sessionStorage.clear();
+if (payload.session) {
+  localStorage.setItem("accessToken", payload.session.accessToken);
+  localStorage.setItem("refreshToken", payload.session.refreshToken);
+  localStorage.setItem("tenantSlug", payload.tenantSlug);
+  localStorage.setItem("tenant", JSON.stringify(payload.session.tenant));
+  localStorage.setItem("user", JSON.stringify(payload.session.user));
+  localStorage.setItem("uiTheme", payload.theme || "light");
+  localStorage.setItem("uiLanguage", "es");
+  sessionStorage.setItem("reservationDate", "2026-05-14");
+}
+location.replace(payload.target);
+</script>
+</body></html>

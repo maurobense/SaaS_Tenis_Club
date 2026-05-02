@@ -6,10 +6,7 @@ import { toast } from "../components/toast.js?v=2026050123";
 import { translateElement } from "../preferences.js?v=2026050123";
 
 export async function membersPage() {
-  const rows = await apiClient.get("/api/members").catch(() => [
-    { id: "demo-1", fullName: "Sofia Socio", email: "socio@clubdemo.com", memberNumber: "M-0001", membershipStatus: "Active", noShowCount: 0, isActive: true },
-    { id: "demo-2", fullName: "Mateo Perez", email: "mateo@example.com", memberNumber: "M-0002", membershipStatus: "Overdue", noShowCount: 1, isActive: true }
-  ]);
+  const rows = await apiClient.get("/api/members").catch(() => []);
 
   setTimeout(() => {
     document.querySelector("[data-new-member]")?.addEventListener("click", () => openMemberModal());
@@ -32,7 +29,7 @@ export async function membersPage() {
       { label: "No-shows", value: rows.reduce((sum, x) => sum + (x.noShowCount || 0), 0), trend: "acumulados" },
       { label: "Total socios", value: rows.length, trend: "en el club" }
     ].map(x=>`<article class="card metric"><span class="metric-label">${x.label}</span><strong class="metric-value">${x.value}</strong><span class="metric-trend">${x.trend}</span></article>`).join("")}</div>
-    <article class="card panel">${table(["Socio","Correo","Nro","Membresia","No-show","Estado","Accion"], rows.map(m => `<tr><td><strong>${escapeHtml(m.fullName)}</strong></td><td>${escapeHtml(m.email)}</td><td>${escapeHtml(m.memberNumber)}</td><td>${membershipBadge(m.membershipStatus)}</td><td>${m.noShowCount || 0}</td><td>${badge(m.isActive ? "Active" : "Inactive")}</td><td><button class="btn ghost" data-view-member="${escapeAttr(m.id)}">Ver perfil</button></td></tr>`))}</article>
+    <article class="card panel">${rows.length ? table(["Socio","Correo","Nro","Membresia","No-show","Estado","Accion"], rows.map(m => `<tr><td><strong>${escapeHtml(m.fullName)}</strong></td><td>${escapeHtml(m.email)}</td><td>${escapeHtml(m.memberNumber)}</td><td>${membershipBadge(m.membershipStatus)}</td><td>${m.noShowCount || 0}</td><td>${badge(m.isActive ? "Active" : "Inactive")}</td><td><button class="btn ghost" data-view-member="${escapeAttr(m.id)}">Ver perfil</button></td></tr>`)) : `<div class="empty-state compact-empty"><strong>Sin socios cargados</strong><span>Los socios aparecen aca despues de crear el primer perfil.</span></div>`}</article>
   </section>`;
 }
 

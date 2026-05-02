@@ -5,7 +5,7 @@ import { openModal } from "../components/modal.js?v=2026050131";
 import { table } from "../components/table.js?v=2026050123";
 import { toast } from "../components/toast.js?v=2026050123";
 import { translateElement } from "../preferences.js?v=2026050123";
-import { openAttendanceModal } from "./coachDashboard.js?v=2026050123";
+import { openAttendanceModal } from "./coachDashboard.js?v=2026050157";
 
 const dayLabel = { 0: "Domingo", 1: "Lunes", 2: "Martes", 3: "Miercoles", 4: "Jueves", 5: "Viernes", 6: "Sabado", Monday: "Lunes", Tuesday: "Martes", Wednesday: "Miercoles", Thursday: "Jueves", Friday: "Viernes", Saturday: "Sabado", Sunday: "Domingo" };
 const levelLabel = { 1: "Inicial", 2: "Intermedio", 3: "Avanzado", 4: "Ninos", 5: "Adultos", 6: "Competicion", 7: "Personalizado", Beginner: "Inicial", Intermediate: "Intermedio", Advanced: "Avanzado", Kids: "Ninos", Adults: "Adultos", Competition: "Competicion", Custom: "Personalizado" };
@@ -18,7 +18,7 @@ export async function classesPage() {
   const isCoach = user?.role === "Coach";
   const isMember = user?.role === "Member";
   const [classes, myEnrollments] = await Promise.all([
-    apiClient.get("/api/classes").catch(() => demoClasses()),
+    apiClient.get("/api/classes").catch(() => []),
     isMember ? apiClient.get("/api/classes/my-enrollments").catch(() => []) : Promise.resolve([])
   ]);
   const enrollmentMap = new Map(myEnrollments.map(x => [x.trainingClassId || x.TrainingClassId, x.status || x.Status]));
@@ -172,30 +172,34 @@ async function openStudentsModal(classId, className) {
   }));
 }
 
-function openClassModal() {
+async function openClassModal() {
+  const [coaches, courts] = await Promise.all([
+    apiClient.get("/api/coaches").catch(() => []),
+    apiClient.get("/api/courts").catch(() => [])
+  ]);
   const modal = openModal({
     title: "Nueva clase",
-    content: `<form id="class-form" class="grid">
+    content: coaches.length ? `<form id="class-form" class="grid">
       <div class="field"><label>Nombre</label><input name="name" required placeholder="Ej: Adultos intermedio"></div>
       <div class="field"><label>Descripcion</label><textarea name="description" rows="2"></textarea></div>
       <div class="grid two-fields">
-        <div class="field"><label>Profesor</label><select name="coachId"><option value="55555555-5555-5555-5555-555555555555">Carla Profesora</option></select></div>
-        <div class="field"><label>Cancha</label><select name="courtId"><option value="">Sin cancha fija</option><option value="77777777-7777-7777-7777-777777777771">Cancha 1</option><option value="77777777-7777-7777-7777-777777777772">Cancha 2</option></select></div>
+        <div class="field"><label>Profesor</label><select name="coachId">${coaches.map(coach => `<option value="${escapeAttr(coach.id)}">${escapeHtml(coach.name || coach.email || "Profesor")}</option>`).join("")}</select></div>
+        <div class="field"><label>Cancha</label><select name="courtId"><option value="">Sin cancha fija</option>${courts.map(court => `<option value="${escapeAttr(court.id)}">${escapeHtml(court.name || "Cancha")}</option>`).join("")}</select></div>
       </div>
       <div class="grid two-fields">
         <div class="field"><label>Dia</label><select name="dayOfWeek"><option value="1">Lunes</option><option value="2">Martes</option><option value="3">Miercoles</option><option value="4">Jueves</option><option value="5">Viernes</option><option value="6">Sabado</option><option value="0">Domingo</option></select></div>
         <div class="field"><label>Nivel</label><select name="level"><option value="1">Inicial</option><option value="2">Intermedio</option><option value="3">Avanzado</option><option value="4">Ninos</option><option value="5">Adultos</option><option value="6">Competicion</option></select></div>
       </div>
       <div class="grid two-fields">
-        <div class="field"><label>Inicio</label><input name="startTime" type="time" value="19:00" required></div>
-        <div class="field"><label>Fin</label><input name="endTime" type="time" value="20:00" required></div>
+        <div class="field"><label>Inicio</label><input name="startTime" type="time" required></div>
+        <div class="field"><label>Fin</label><input name="endTime" type="time" required></div>
       </div>
       <div class="field"><label>Cupo maximo</label><input name="maxStudents" type="number" min="1" value="8" required></div>
       <button class="btn" type="submit">Crear clase</button>
-    </form>`
+    </form>` : `<div class="empty-state"><strong>No hay profesores disponibles</strong><span>Primero crea un profesor activo para asignar una clase.</span></div>`
   });
 
-  modal.querySelector("#class-form").addEventListener("submit", async event => {
+  modal.querySelector("#class-form")?.addEventListener("submit", async event => {
     event.preventDefault();
     const v = Object.fromEntries(new FormData(event.currentTarget).entries());
     try {
@@ -246,9 +250,6 @@ function escapeAttr(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
 }
 
-function demoClasses() {
-  return [
-    { id: "1", name: "Adultos intermedio", coachName: "Carla Profesora", courtName: "Cancha 1", dayOfWeek: 2, startTime: "19:00", maxStudents: 8, activeStudents: 6, waitingList: 0, level: 2 },
-    { id: "2", name: "Ninos inicial", coachName: "Carla Profesora", courtName: "Cancha 2", dayOfWeek: 6, startTime: "10:00", maxStudents: 10, activeStudents: 8, waitingList: 1, level: 4 }
-  ];
+function escapeHtml(value) {
+  return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }

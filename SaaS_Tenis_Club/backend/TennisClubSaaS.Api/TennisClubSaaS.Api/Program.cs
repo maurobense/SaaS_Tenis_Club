@@ -1,4 +1,7 @@
 using System.Text;
+using Amazon;
+using Amazon.Runtime;
+using Amazon.S3;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +14,7 @@ using TennisClubSaaS.Infrastructure.Data;
 using TennisClubSaaS.Infrastructure.Repositories;
 using TennisClubSaaS.Infrastructure.Security;
 using TennisClubSaaS.Infrastructure.Seed;
+using TennisClubSaaS.Infrastructure.Storage;
 using TennisClubSaaS.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,12 +31,34 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddSingleton<IAmazonS3>(_ =>
+{
+    var section = builder.Configuration.GetSection("Storage:S3");
+    var regionName = section["Region"] ?? "us-east-1";
+    var config = new AmazonS3Config
+    {
+        RegionEndpoint = RegionEndpoint.GetBySystemName(regionName)
+    };
+
+    var accessKey = section["AccessKey"];
+    var secretKey = section["SecretKey"];
+
+    if (!string.IsNullOrWhiteSpace(accessKey) && !string.IsNullOrWhiteSpace(secretKey))
+        return new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey), config);
+
+    return new AmazonS3Client(config);
+});
+builder.Services.AddScoped<IMediaStorageService, MediaStorageService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key requerido.");
+if (builder.Environment.IsProduction() && (jwtKey.StartsWith("CHANGE_ME", StringComparison.OrdinalIgnoreCase) || jwtKey.Length < 64))
+{
+    throw new InvalidOperationException("Jwt:Key debe configurarse en produccion con una clave fuerte de al menos 64 caracteres.");
+}
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -65,9 +91,18 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 app.UseMiddleware<ErrorHandlingMiddleware>();
+if (app.Environment.IsProduction())
+{
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseCors("Frontend");
-app.UseSwagger();
-app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseMiddleware<TenantResolutionMiddleware>();
 app.UseAuthorization();

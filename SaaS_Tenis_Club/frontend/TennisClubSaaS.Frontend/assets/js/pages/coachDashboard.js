@@ -13,9 +13,11 @@ const attendanceOptions = [
 const classSessionsApi = "/api/classsessions";
 
 export async function coachDashboard() {
-  const classes = await apiClient.get("/api/classes").catch(() => demoClasses());
+  const [classes, cards] = await Promise.all([
+    apiClient.get("/api/classes").catch(() => []),
+    apiClient.get("/api/dashboard/coach").catch(() => emptyCoachCards())
+  ]);
   const rows = classes.map(normalizeClass);
-  const totalStudents = rows.reduce((sum, item) => sum + item.activeStudents, 0);
 
   setTimeout(() => {
     document.querySelectorAll("[data-attendance-class]").forEach(button => {
@@ -30,12 +32,7 @@ export async function coachDashboard() {
     <div class="page-head">
       <div><h1 class="page-title">Panel del profesor</h1><p class="page-subtitle">Clases asignadas, alumnos, asistencia y notas.</p></div>
     </div>
-    <div class="grid cards">${[
-      { label: "Clases hoy", value: rows.length, trend: "agenda" },
-      { label: "Alumnos", value: totalStudents, trend: "activos" },
-      { label: "Asistencia", value: "91%", trend: "ultimos 7 dias" },
-      { label: "Notas", value: rows.filter(x => x.activeStudents > 0).length, trend: "seguimiento" }
-    ].map(metricCard).join("")}</div>
+    <div class="grid cards">${cards.map(metricCard).join("")}</div>
     <article class="card panel">
       <div class="section-title"><h2>Agenda del profesor</h2><span class="badge">${rows.length} clases</span></div>
       ${rows.length ? `<div class="class-grid">${rows.map(renderClassCard).join("")}</div>` : `<div class="empty-state"><strong>Sin clases asignadas</strong><span>Cuando el club te asigne clases apareceran aca.</span></div>`}
@@ -121,7 +118,7 @@ async function ensureClassSession(trainingClass, notes) {
   );
   if (existing) return normalizeSession(existing);
 
-  const startTime = trainingClass.startTime || "19:00";
+  const startTime = trainingClass.startTime || "00:00";
   const endTime = trainingClass.endTime || addOneHour(startTime);
   const created = await apiClient.post(classSessionsApi, {
     trainingClassId: trainingClass.id,
@@ -157,7 +154,7 @@ function normalizeSession(session) {
 }
 
 function addOneHour(value) {
-  const [hour, minute] = String(value || "19:00").split(":").map(Number);
+  const [hour, minute] = String(value || "00:00").split(":").map(Number);
   return `${String((hour + 1) % 24).padStart(2, "0")}:${String(minute || 0).padStart(2, "0")}`;
 }
 
@@ -181,9 +178,11 @@ function escapeHtml(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
-function demoClasses() {
+function emptyCoachCards() {
   return [
-    { id: "1", name: "Adultos intermedio", courtName: "Cancha 1", dayOfWeek: new Date().getDay(), startTime: "19:00", endTime: "20:00", maxStudents: 8, activeStudents: 6, level: 2 },
-    { id: "2", name: "Ninos inicial", courtName: "Cancha 2", dayOfWeek: 6, startTime: "10:00", endTime: "11:00", maxStudents: 10, activeStudents: 8, level: 4 }
+    { label: "Clases hoy", value: "0", trend: "agenda", tone: "primary" },
+    { label: "Alumnos", value: "0", trend: "activos", tone: "success" },
+    { label: "Asistencia", value: "-", trend: "sin registros", tone: "primary" },
+    { label: "Notas", value: "0", trend: "seguimiento", tone: "primary" }
   ];
 }

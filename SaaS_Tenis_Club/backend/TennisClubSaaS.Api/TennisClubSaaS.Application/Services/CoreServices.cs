@@ -257,8 +257,15 @@ public class ReservationService(IUnitOfWork uow, ITenantProvider tenantProvider,
         {
             var limit = await settings.GetIntAsync("WeekendReservationLimitPerWeek", 1, ct);
             var weekStart = start.Date.AddDays(-(int)start.DayOfWeek);
-            var weekEnd = weekStart.AddDays(7);
-            var count = uow.Repository<Reservation>().Query().Count(x => x.MemberProfileId == memberId && x.StartDateTime >= weekStart && x.StartDateTime < weekEnd && x.Status != ReservationStatus.Cancelled && (x.StartDateTime.DayOfWeek == DayOfWeek.Saturday || x.StartDateTime.DayOfWeek == DayOfWeek.Sunday));
+            var sundayStart = weekStart;
+            var mondayStart = weekStart.AddDays(1);
+            var saturdayStart = weekStart.AddDays(6);
+            var nextSundayStart = weekStart.AddDays(7);
+            var count = uow.Repository<Reservation>().Query().Count(x =>
+                x.MemberProfileId == memberId &&
+                x.Status != ReservationStatus.Cancelled &&
+                ((x.StartDateTime >= sundayStart && x.StartDateTime < mondayStart) ||
+                 (x.StartDateTime >= saturdayStart && x.StartDateTime < nextSundayStart)));
             if (count >= limit) return ApiResponse<ReservationDto>.Fail("Se alcanzó el límite semanal de reservas de fin de semana.");
         }
 
@@ -571,14 +578,201 @@ public class DashboardService(IUnitOfWork uow) : IDashboardService
             x.Status,
             x.Reference,
             x.Notes)).ToList();
-        return Task.FromResult(new AdminDashboardDto(cards, reservations, overdue));
+        return Task.FromResult(new AdminDashboardDto(cards, reservations, overdue, BuildWeeklyOccupancy(today)));
+    }
+
+    private WeeklyOccupancyDto BuildWeeklyOccupancy(DateTime today)
+    {
+        var weekStart = today.Date.AddDays(-(((int)today.DayOfWeek + 6) % 7));
+        var weekEnd = weekStart.AddDays(7);
+        var courts = uow.Repository<Court>().Query()
+            .Where(x => x.IsActive)
+            .Select(x => new { x.Id, x.OpeningTime, x.ClosingTime })
+            .ToList();
+
+        if (courts.Count == 0)
+        {
+            return EmptyOccupancy();
+        }
+
+        var courtIds = courts.Select(x => x.Id).ToHashSet();
+        var availability = uow.Repository<CourtAvailability>().Query()
+            .Where(x => x.IsAvailable && courtIds.Contains(x.CourtId))
+            .ToList();
+        var reservations = uow.Repository<Reservation>().Query()
+            .Where(x => x.StartDateTime < weekEnd && x.EndDateTime > weekStart && x.Status != ReservationStatus.Cancelled && x.Status != ReservationStatus.NoShow)
+            .ToList();
+
+        var labels = new[] { "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom" };
+        var days = new List<WeeklyOccupancyDayDto>();
+        var totalBooked = 0;
+        var totalAvailable = 0;
+
+        for (var index = 0; index < 7; index++)
+        {
+            var dayStart = weekStart.AddDays(index);
+            var dayEnd = dayStart.AddDays(1);
+            var dayOfWeek = dayStart.DayOfWeek;
+            var availableMinutes = courts.Sum(court =>
+            {
+                var rows = availability.Where(x => x.CourtId == court.Id && x.DayOfWeek == dayOfWeek).ToList();
+                if (rows.Count > 0)
+                {
+                    return rows.Sum(x => MinutesBetween(x.StartTime, x.EndTime));
+                }
+
+                return MinutesBetween(court.OpeningTime, court.ClosingTime);
+            });
+            var bookedMinutes = reservations
+                .Where(x => x.StartDateTime < dayEnd && x.EndDateTime > dayStart)
+                .Sum(x => OverlapMinutes(x.StartDateTime, x.EndDateTime, dayStart, dayEnd));
+            var percentage = availableMinutes > 0 ? Math.Clamp((int)Math.Round(bookedMinutes * 100m / availableMinutes), 0, 100) : 0;
+
+            totalBooked += bookedMinutes;
+            totalAvailable += availableMinutes;
+            days.Add(new WeeklyOccupancyDayDto(labels[index], percentage, bookedMinutes, availableMinutes));
+        }
+
+        if (totalAvailable == 0)
+        {
+            return EmptyOccupancy();
+        }
+
+        var peak = days.OrderByDescending(x => x.Percentage).First();
+        var average = Math.Clamp((int)Math.Round(totalBooked * 100m / totalAvailable), 0, 100);
+        return new WeeklyOccupancyDto(true, average, peak.Day, peak.Percentage, totalBooked, totalAvailable, days);
+    }
+
+    private static WeeklyOccupancyDto EmptyOccupancy() =>
+        new(false, 0, null, 0, 0, 0, Array.Empty<WeeklyOccupancyDayDto>());
+
+    private static int MinutesBetween(TimeOnly start, TimeOnly end)
+    {
+        var minutes = (int)(end.ToTimeSpan() - start.ToTimeSpan()).TotalMinutes;
+        return Math.Max(0, minutes);
+    }
+
+    private static int OverlapMinutes(DateTime start, DateTime end, DateTime windowStart, DateTime windowEnd)
+    {
+        var overlapStart = start > windowStart ? start : windowStart;
+        var overlapEnd = end < windowEnd ? end : windowEnd;
+        return Math.Max(0, (int)(overlapEnd - overlapStart).TotalMinutes);
     }
 
     public Task<IReadOnlyCollection<DashboardCardDto>> GetCoachAsync(Guid userId, CancellationToken ct = default) =>
-        Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([new("Mis clases hoy", "3", "agenda", "primary"), new("Alumnos activos", "42", "inscriptos", "success"), new("Asistencia reciente", "91%", "últimos 7 días", "success")]);
+        BuildCoachDashboard(userId);
+
+    private Task<IReadOnlyCollection<DashboardCardDto>> BuildCoachDashboard(Guid userId)
+    {
+        var coach = uow.Repository<CoachProfile>().Query().FirstOrDefault(x => x.UserId == userId);
+        if (coach is null)
+        {
+            return Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([
+                new("Clases hoy", "0", "agenda", "primary"),
+                new("Alumnos", "0", "activos", "success"),
+                new("Asistencia", "-", "sin registros", "primary"),
+                new("Notas", "0", "seguimiento", "primary")
+            ]);
+        }
+
+        var today = DateTime.Today;
+        var since = DateOnly.FromDateTime(today.AddDays(-7));
+        var classIds = uow.Repository<TrainingClass>().Query()
+            .Where(x => x.CoachId == coach.Id && x.IsActive)
+            .Select(x => x.Id)
+            .ToList();
+        var classesToday = uow.Repository<TrainingClass>().Query()
+            .Count(x => x.CoachId == coach.Id && x.IsActive && x.DayOfWeek == today.DayOfWeek);
+        var activeStudents = uow.Repository<ClassEnrollment>().Query()
+            .Count(x => classIds.Contains(x.TrainingClassId) && x.Status == EnrollmentStatus.Active);
+        var attendances = uow.Repository<ClassAttendance>().Query()
+            .Where(x => x.ClassSession != null && classIds.Contains(x.ClassSession.TrainingClassId) && x.ClassSession.SessionDate >= since)
+            .ToList();
+        var attendanceRate = attendances.Count == 0
+            ? "-"
+            : $"{Math.Round(attendances.Count(x => x.AttendanceStatus == AttendanceStatus.Present) * 100m / attendances.Count):0}%";
+
+        return Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([
+            new("Clases hoy", classesToday.ToString(), "agenda", "primary"),
+            new("Alumnos", activeStudents.ToString(), "activos", "success"),
+            new("Asistencia", attendanceRate, attendances.Count == 0 ? "sin registros" : "ultimos 7 dias", "success"),
+            new("Notas", attendances.Count(x => !string.IsNullOrWhiteSpace(x.Notes)).ToString(), "seguimiento", "primary")
+        ]);
+    }
 
     public Task<IReadOnlyCollection<DashboardCardDto>> GetMemberAsync(Guid userId, CancellationToken ct = default) =>
-        Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([new("Membresía", "Activa", "al día", "success"), new("Próxima reserva", "Hoy 19:00", "Cancha 2", "primary"), new("Pagos pendientes", "0", "sin deuda", "success")]);
+        BuildMemberDashboard(userId);
+
+    private Task<IReadOnlyCollection<DashboardCardDto>> BuildMemberDashboard(Guid userId)
+    {
+        var member = uow.Repository<MemberProfile>().Query().FirstOrDefault(x => x.UserId == userId);
+        if (member is null)
+        {
+            return Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([
+                new("Membresia", "-", "sin perfil", "primary"),
+                new("Proxima reserva", "-", "sin reservas", "primary"),
+                new("Proxima clase", "-", "sin clases", "primary"),
+                new("Pagos pendientes", "0", "sin deuda", "success")
+            ]);
+        }
+
+        var now = DateTime.UtcNow;
+        var nextReservation = uow.Repository<Reservation>().Query()
+            .Where(x => x.MemberProfileId == member.Id && x.StartDateTime >= now && x.Status != ReservationStatus.Cancelled && x.Status != ReservationStatus.NoShow)
+            .OrderBy(x => x.StartDateTime)
+            .Select(x => new { x.StartDateTime, CourtName = x.Court != null ? x.Court.Name : null })
+            .FirstOrDefault();
+        var nextClass = uow.Repository<ClassEnrollment>().Query()
+            .Where(x => x.MemberProfileId == member.Id && (x.Status == EnrollmentStatus.Active || x.Status == EnrollmentStatus.WaitingList) && x.TrainingClass != null && x.TrainingClass.IsActive)
+            .Select(x => new { x.TrainingClass!.Name, x.TrainingClass.DayOfWeek, x.TrainingClass.StartTime })
+            .ToList()
+            .OrderBy(x => DaysUntil(x.DayOfWeek, DateTime.Today.DayOfWeek))
+            .ThenBy(x => x.StartTime)
+            .FirstOrDefault();
+        var pendingCount = uow.Repository<Membership>().Query()
+            .Count(x => x.MemberProfileId == member.Id && (x.Status == MonthlyMembershipStatus.Pending || x.Status == MonthlyMembershipStatus.Overdue));
+
+        return Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([
+            new("Membresia", MembershipLabel(member.MembershipStatus), MembershipTrend(member.MembershipStatus), member.MembershipStatus == MembershipStatus.Active ? "success" : "danger"),
+            new("Proxima reserva", nextReservation is null ? "-" : nextReservation.StartDateTime.ToString("HH:mm"), nextReservation is null ? "sin reservas" : nextReservation.CourtName ?? nextReservation.StartDateTime.ToString("dd/MM"), "primary"),
+            new("Proxima clase", nextClass is null ? "-" : ShortDay(nextClass.DayOfWeek), nextClass is null ? "sin clases" : nextClass.Name, "primary"),
+            new("Pagos pendientes", pendingCount.ToString(), pendingCount == 0 ? "sin deuda" : "a revisar", pendingCount == 0 ? "success" : "danger")
+        ]);
+    }
+
+    private static int DaysUntil(DayOfWeek target, DayOfWeek today) =>
+        ((int)target - (int)today + 7) % 7;
+
+    private static string ShortDay(DayOfWeek value) => value switch
+    {
+        DayOfWeek.Monday => "Lun",
+        DayOfWeek.Tuesday => "Mar",
+        DayOfWeek.Wednesday => "Mie",
+        DayOfWeek.Thursday => "Jue",
+        DayOfWeek.Friday => "Vie",
+        DayOfWeek.Saturday => "Sab",
+        DayOfWeek.Sunday => "Dom",
+        _ => "-"
+    };
+
+    private static string MembershipLabel(MembershipStatus value) => value switch
+    {
+        MembershipStatus.Active => "Activa",
+        MembershipStatus.Inactive => "Inactiva",
+        MembershipStatus.Pending => "Pendiente",
+        MembershipStatus.Overdue => "Vencida",
+        MembershipStatus.Suspended => "Suspendida",
+        _ => "-"
+    };
+
+    private static string MembershipTrend(MembershipStatus value) => value switch
+    {
+        MembershipStatus.Active => "al dia",
+        MembershipStatus.Pending => "pendiente",
+        MembershipStatus.Overdue => "requiere pago",
+        MembershipStatus.Suspended => "suspendida",
+        _ => "a revisar"
+    };
 
     public Task<IReadOnlyCollection<DashboardCardDto>> GetSuperAdminAsync(CancellationToken ct = default) =>
         Task.FromResult<IReadOnlyCollection<DashboardCardDto>>([new("Clubes", uow.Repository<ClubTenant>().Query().Count().ToString(), "total", "primary"), new("Clubes activos", uow.Repository<ClubTenant>().Query().Count(x => x.IsActive).ToString(), "operativos", "success"), new("Usuarios", uow.Repository<AppUser>().Query().Count().ToString(), "plataforma", "primary")]);

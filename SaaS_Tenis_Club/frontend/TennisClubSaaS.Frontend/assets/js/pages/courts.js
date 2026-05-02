@@ -18,10 +18,7 @@ const locationOptions = [
 ];
 
 export async function courtsPage() {
-  const courts = await apiClient.get("/api/courts").catch(() => [
-    { id: "demo-1", name: "Cancha 1", surfaceType: "Clay", indoorOutdoor: "Outdoor", hasLights: true, isActive: true, openingTime: "08:00", closingTime: "22:00", slotDurationMinutes: 60 },
-    { id: "demo-2", name: "Cancha 2", surfaceType: "Hard", indoorOutdoor: "Outdoor", hasLights: true, isActive: true, openingTime: "08:00", closingTime: "22:00", slotDurationMinutes: 60 }
-  ]);
+  const courts = await apiClient.get("/api/courts").catch(() => []);
 
   setTimeout(() => {
     document.querySelector("[data-new-court]")?.addEventListener("click", () => openCourtModal());
@@ -45,7 +42,7 @@ export async function courtsPage() {
     </div>
 
     <section class="court-grid">
-      ${courts.map(c => `<article class="card court-card">
+      ${courts.length ? courts.map(c => `<article class="card court-card">
         <div class="court-card-head">
           <div style="display:flex; gap:12px; align-items:center;"><span class="court-mark">T</span><div><h2>${escapeHtml(c.name)}</h2><p class="muted">${surfaceName(c.surfaceType)} - ${locationName(c.indoorOutdoor)}</p></div></div>
           ${badge(c.isActive ? "Active" : "Inactive")}
@@ -59,10 +56,10 @@ export async function courtsPage() {
           <button class="btn ghost" data-edit-court="${escapeAttr(c.id)}">Editar</button>
           <button class="btn danger-soft" data-delete-court="${escapeAttr(c.id)}">Desactivar</button>
         </div>
-      </article>`).join("")}
+      </article>`).join("") : `<div class="empty-state"><strong>Sin canchas cargadas</strong><span>Crea una cancha activa para comenzar a ofrecer turnos.</span></div>`}
     </section>
 
-    <article class="card panel">${table(["Nombre","Superficie","Tipo","Luces","Horario","Slot","Estado"], courts.map(c => `<tr>
+    <article class="card panel">${courts.length ? table(["Nombre","Superficie","Tipo","Luces","Horario","Slot","Estado"], courts.map(c => `<tr>
       <td><strong>${escapeHtml(c.name)}</strong></td>
       <td>${surfaceName(c.surfaceType)}</td>
       <td>${locationName(c.indoorOutdoor)}</td>
@@ -70,7 +67,7 @@ export async function courtsPage() {
       <td>${timeOnly(c.openingTime)} - ${timeOnly(c.closingTime)}</td>
       <td>${c.slotDurationMinutes || 60} min</td>
       <td>${badge(c.isActive ? "Active" : "Inactive")}</td>
-    </tr>`))}</article>
+    </tr>`)) : `<div class="empty-state compact-empty"><strong>No hay canchas para listar</strong><span>La tabla se completa cuando cargues la primera cancha.</span></div>`}</article>
   </section>`;
 }
 

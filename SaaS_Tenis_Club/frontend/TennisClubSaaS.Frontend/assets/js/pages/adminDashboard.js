@@ -32,46 +32,56 @@ export async function adminDashboard() {
     </div>
     <div class="grid cards premium-metrics">${cards.map(metricCard).join("")}</div>
     <div class="grid dashboard-grid">
-      ${renderOccupancyPanel()}
+      ${renderOccupancyPanel(data.weeklyOccupancy)}
       ${renderAlertsPanel(data, cards)}
     </div>
     ${renderUpcomingReservations(data.upcomingReservations || [])}
   </section>`;
 }
 
-function renderOccupancyPanel() {
-  const days = [
-    ["Lun", 55],
-    ["Mar", 61],
-    ["Mie", 67],
-    ["Jue", 73],
-    ["Vie", 79],
-    ["Sab", 85],
-    ["Dom", 91]
-  ];
-  const average = Math.round(days.reduce((sum, [, value]) => sum + value, 0) / days.length);
-  const peak = days.reduce((best, current) => current[1] > best[1] ? current : best, days[0]);
+function renderOccupancyPanel(occupancy) {
+  if (!occupancy?.hasCapacity) {
+    return `<article class="card panel analytics-card occupancy-panel">
+      <div class="section-title analytics-title">
+        <div>
+          <span class="eyebrow">Uso semanal</span>
+          <h2>Ocupacion de canchas</h2>
+        </div>
+        <span class="analytics-pill">sin datos</span>
+      </div>
+      <div class="empty-state compact-empty"><strong>Sin datos de ocupacion</strong><span>Cuando el club tenga canchas y reservas confirmadas, la ocupacion semanal va a aparecer aca.</span></div>
+    </article>`;
+  }
+
+  const days = occupancy.days || [];
+  const peakLabel = occupancy.peakDay ? `${occupancy.peakDay} ${occupancy.peakPercentage}%` : "Sin pico";
   return `<article class="card panel analytics-card occupancy-panel">
     <div class="section-title analytics-title">
       <div>
         <span class="eyebrow">Uso semanal</span>
         <h2>Ocupacion de canchas</h2>
       </div>
-      <span class="analytics-pill">${average}% promedio</span>
+      <span class="analytics-pill">${occupancy.averagePercentage}% promedio</span>
     </div>
     <div class="occupancy-summary">
-      <div><span>Pico semanal</span><strong>${peak[0]} ${peak[1]}%</strong></div>
-      <div><span>Demanda alta</span><strong>Sab y Dom</strong></div>
-      <div><span>Tendencia</span><strong>+12%</strong></div>
+      <div><span>Pico semanal</span><strong>${peakLabel}</strong></div>
+      <div><span>Reservado</span><strong>${formatHours(occupancy.bookedMinutes)}</strong></div>
+      <div><span>Capacidad</span><strong>${formatHours(occupancy.availableMinutes)}</strong></div>
     </div>
     <div class="occupancy-list">
-      ${days.map(([day, value]) => `<div class="occupancy-row ${value >= 88 ? "critical" : value >= 76 ? "high" : ""}" style="--value:${value};">
-        <div class="occupancy-label"><strong>${day}</strong><span>${value}%</span></div>
-        <div class="occupancy-track" aria-label="Ocupacion ${day} ${value}%"><span></span></div>
+      ${days.map(day => `<div class="occupancy-row ${day.percentage >= 88 ? "critical" : day.percentage >= 76 ? "high" : ""}" style="--value:${day.percentage};">
+        <div class="occupancy-label"><strong>${day.day}</strong><span>${day.percentage}%</span></div>
+        <div class="occupancy-track" aria-label="Ocupacion ${day.day} ${day.percentage}%"><span></span></div>
       </div>`).join("")}
     </div>
     <div class="occupancy-legend"><span><i></i>Normal</span><span><i></i>Alta demanda</span><span><i></i>Saturacion</span></div>
   </article>`;
+}
+
+function formatHours(minutes) {
+  const value = Number(minutes || 0) / 60;
+  if (!Number.isFinite(value) || value <= 0) return "0 h";
+  return `${value % 1 === 0 ? value.toFixed(0) : value.toFixed(1)} h`;
 }
 
 function renderAlertsPanel(data, cards) {

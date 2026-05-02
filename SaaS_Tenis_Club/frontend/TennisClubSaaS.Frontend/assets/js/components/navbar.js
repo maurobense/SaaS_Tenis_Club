@@ -1,5 +1,6 @@
-import { auth } from "../auth.js?v=2026050124";
-import { config } from "../config.js?v=2026050123";
+import { auth } from "../auth.js?v=2026050145";
+import { config } from "../config.js?v=2026050145";
+import { currentTenantSlug } from "../tenantContext.js?v=2026050145";
 import { currentTheme, setTheme, t, translateElement } from "../preferences.js?v=2026050124";
 
 const searchCache = new Map();
@@ -132,7 +133,7 @@ function navigateTo(route, input, panel) {
 
 async function loadSearchIndex(role) {
   const normalizedRole = role || "Member";
-  const cacheKey = `${localStorage.getItem("tenantSlug") || config.defaultTenantSlug}:${normalizedRole}`;
+  const cacheKey = `${currentTenantSlug(config.defaultTenantSlug)}:${normalizedRole}`;
   if (searchCache.has(cacheKey)) return searchCache.get(cacheKey);
 
   const actions = quickActionsForRole(normalizedRole);
@@ -180,7 +181,7 @@ async function silentGet(path) {
   try {
     const headers = {
       "Content-Type": "application/json",
-      "X-Tenant-Slug": localStorage.getItem("tenantSlug") || config.defaultTenantSlug
+      "X-Tenant-Slug": currentTenantSlug(config.defaultTenantSlug)
     };
     const token = localStorage.getItem("accessToken");
     if (token) headers.Authorization = `Bearer ${token}`;

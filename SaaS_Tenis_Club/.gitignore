@@ -1,0 +1,17 @@
+.vs/
+bin/
+obj/
+publish/
+publish-somee/
+publish-somee.zip
+.buildcheck/
+_dev_run_api/
+_verify_build/
+_verify*_build/
+build-check/
+build-check-final/
+frontend/netlify-front.zip
+frontend/assets/
+frontend/frontend/
+*.user
+*.suo

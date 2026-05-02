@@ -52,6 +52,16 @@ public interface ISettingService
     Task UpsertAsync(string key, string value, CancellationToken ct = default);
 }
 
+public record MediaUploadResult(string Url, string Key, string Folder, string FileName, long Length);
+
+public interface IMediaStorageService
+{
+    long MaxFileSizeBytes { get; }
+    string BuildUploadKey(string folder, string fileName);
+    string BuildPublicUrl(string key);
+    Task<MediaUploadResult> UploadAsync(string folder, string fileName, Stream content, string contentType, long length, CancellationToken ct = default);
+}
+
 public interface IAuthService
 {
     Task<ApiResponse<LoginResponse>> LoginAsync(LoginRequest request, CancellationToken ct = default);

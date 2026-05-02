@@ -68,7 +68,7 @@ No requiere build. Abrir `frontend/TennisClubSaaS.Frontend/index.html` o servirl
 Configurar API en:
 
 ```text
-frontend/TennisClubSaaS.Frontend/assets/js/config.js
+frontend/TennisClubSaaS.Frontend/assets/js/env.js
 ```
 
 Para Netlify, publicar la carpeta:
@@ -78,6 +78,8 @@ frontend/TennisClubSaaS.Frontend
 ```
 
 ## Deploy Somee
+
+Ver guia completa en `docs/production-deploy.md`.
 
 1. Cambiar `ConnectionStrings:DefaultConnection` en `appsettings.Production.json`.
 2. Cambiar `Jwt:Key` por una clave fuerte.
@@ -90,6 +92,12 @@ dotnet publish TennisClubSaaS.Api/TennisClubSaaS.Api.csproj -c Release -o ./publ
 
 5. Subir el contenido de `publish` a Somee.
 6. Ejecutar migraciones contra SQL Server antes del primer uso.
+
+Cada club puede usar un link propio por slug:
+
+```text
+https://tu-front.netlify.app/club-demo/#/login
+```
 
 ## Endpoints principales
 
